@@ -7,25 +7,25 @@
 
 | Nome | Papel na Aula 01 |
 |---|---|
-| _(Guilherme Orige Kernbichler)_ | Responsável do dia |
-| _(Davi Livino Mazoti)_ | |
-| _(João Paulo Arábia da Silva)_ | |
+| _Guilherme Orige Kernbichler_ | Responsável do dia |
+| _Davi Livino Mazoti_ | |
+| _João Paulo Arábia da Silva_ | |
 
 ## Descrição do desafio
 
-_(A equipe de desenvolvimento Payload Express, recebeu a demanda de construir um sistema de gestão 
+_A equipe de desenvolvimento Payload Express, recebeu a demanda de construir um sistema de gestão 
 de pedidos para um e-commerce de produtos eletrônicos, contemplando cadastro de produtos,
-clientes, pedidos e processamento de pagamentos.)_
+clientes, pedidos e processamento de pagamentos._
 
 ## Funcionalidades previstas
 
-- [ ] Cadastro e gerenciamento de produtos
-- [ ] Cadastro e gerenciamento de clientes
-- [ ] Criação e gerenciamento de pedidos
-- [ ] Processamento de pagamentos (cartão, boleto, Pix)
-- [ ] Testes automatizados (unitários e de integração)
-- [ ] Pipeline de CI/CD
-- [ ] API REST para consumo por um front-end
+- [ ] Cadastro e gerenciamento de produtos - Davi
+- [ ] Cadastro e gerenciamento de clientes - João
+- [ ] Criação e gerenciamento de pedidos - Guilherme
+- [ ] Processamento de pagamentos (cartão, boleto, Pix) - João
+- [ ] Testes automatizados (unitários e de integração) - Guilherme
+- [ ] Pipeline de CI/CD - Davi
+- [ ] API REST para consumo por um front-end - João, Davi, Guilherme
 
 ## Tecnologias
 
@@ -82,9 +82,9 @@ _(Preencher a partir das próximas aulas, conforme o projeto evoluir.)_
 
 ## Combinado da equipe (ética e convivência)
 
-1. _(Respeito mútuo)_
-2. _(Colaboração entre os integrantes)_
-3. _(Divisão justa das tarefas)_
+1. _Respeito mútuo_
+2. _Colaboração entre os integrantes_
+3. _Divisão justa das tarefas_
 
 ## Licença
 
