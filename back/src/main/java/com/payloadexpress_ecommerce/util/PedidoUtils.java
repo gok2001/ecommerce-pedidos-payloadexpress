@@ -18,4 +18,10 @@ public class PedidoUtils {
     private PedidoUtils() {
         // classe utilitária não deve ser instanciada
     }
+
+    private static String gerarNumeroDoPedido() {
+        Random sorteio = new Random();
+        int sequencial = sorteio.nextInt(100000);
+        return String.format("PED-2026-%05d", sequencial);
+    }
 }
