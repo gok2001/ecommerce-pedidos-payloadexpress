@@ -1,4 +1,4 @@
-// package com.payloadexpress-ecommerce.modelo;
+// package com.payloadexpress_ecommerce.modelo;
 
 //Classe responsavel pelo cadastro de clientes
 public class Cliente {
