@@ -24,4 +24,14 @@ public class PedidoUtils {
         int sequencial = sorteio.nextInt(100000);
         return String.format("PED-2026-%05d", sequencial);
     }
+
+    private static double calcularSubtotal(double[] precos, int[] quantidades) {
+        double somaPrecos = 0;
+
+        for (int i = 0; i < precos.length; i++) {
+            somaPrecos += precos[i] * quantidades[i];
+        }
+
+        return somaPrecos;
+    }
 }
