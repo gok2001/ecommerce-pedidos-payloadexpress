@@ -34,4 +34,12 @@ public class PedidoUtils {
 
         return somaPrecos;
     }
+
+    private static double calcularFrete(double pesoEmQuilos, double subtotal) {
+        double quilosCobrados = Math.ceil(pesoEmQuilos);
+        double freteCalculado = quilosCobrados * VALOR_POR_QUILO;
+        double freteFinal = Math.max(freteCalculado, FRETE_MINIMO);
+
+        return freteFinal;
+    }
 }
