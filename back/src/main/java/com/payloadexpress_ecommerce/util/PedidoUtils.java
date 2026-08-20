@@ -59,5 +59,47 @@ public class PedidoUtils {
 
         System.out.printf("Pedido: %20s%n", numeroPedido);
 
+        
+        // Produtos do pedido
+        String[] produtos = {
+            "FuRaDeIra",
+            "SeRRaEleTrica"
+        };
+
+        double[] precos = {
+            378.83,
+            123.67
+        };
+
+        int[] quantidades = {
+            3,
+            7
+        };
+
+        for (int i = 0; i < produtos.length; i++) {
+            produtos[i] = normalizarNome(produtos[i]);
+        }
+
+        System.out.println();
+        System.out.println(montarRecibo(produtos, precos, quantidades));
+
     }
+
+    private static double calcularDesconto(double valorDoPedido) {
+
+        double desconto = valorDoPedido * TAXA_DESCONTO;
+
+        return Math.min(desconto, DESCONTO_MAXIMO);
+    }
+
+    private static String normalizarNome(String nomeDigitado) {
+
+        if (nomeDigitado == null || nomeDigitado.isBlank()) {
+            return "NAO INFORMADO";
+        }
+
+        return nomeDigitado.trim().toUpperCase();
+    }
+
+
 }
