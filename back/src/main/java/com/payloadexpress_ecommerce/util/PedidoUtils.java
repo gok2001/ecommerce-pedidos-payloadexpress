@@ -60,7 +60,6 @@ public class PedidoUtils {
         System.out.printf("Pedido: %20s%n", numeroPedido);
 
         
-        // Produtos do pedido
         String[] produtos = {
             "FuRaDeIra",
             "SeRRaEleTrica"
@@ -101,5 +100,37 @@ public class PedidoUtils {
         return nomeDigitado.trim().toUpperCase();
     }
 
+    private static String montarRecibo( // cria o modelo do recibo
+            String[] produtos,
+            double[] precos,
+            int[] quantidades) {
 
+        StringBuilder recibo = new StringBuilder();
+
+        recibo.append("=== RECIBO DO PEDIDO ===")
+              .append(System.lineSeparator());
+
+        recibo.append(String.format(
+                "%-20s R$ %8s | %3s",
+                "PRODUTO",
+                "PRECO",
+                "QTD"))
+              .append(System.lineSeparator());
+
+        recibo.append("-----------------------------------------------")
+              .append(System.lineSeparator());
+
+        for (int i = 0; i < produtos.length; i++) {
+
+            recibo.append(String.format(
+                    "%-20s R$ %8.2f | %3d",
+                    produtos[i],
+                    precos[i],
+                    quantidades[i]))
+                  .append(System.lineSeparator());
+        }
+
+        return recibo.toString();
+    }
+    
 }
