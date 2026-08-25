@@ -1,10 +1,11 @@
-package com.payloadexpress-ecommerce;
-
-/**
- * Hello world!
- */
+package com.payloadexpress_ecommerce;
+import com.payloadexpress_ecommerce.util.PedidoUtils;
 public class App {
+
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        PedidoUtils.calcularFrete(); // chama calcularFrete
+
     }
+
 }
