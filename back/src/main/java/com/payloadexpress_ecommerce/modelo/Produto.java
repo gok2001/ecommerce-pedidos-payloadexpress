@@ -9,9 +9,10 @@ public class Produto {
     private int quantidadeEmEstoque;
     private boolean ativo;
 
-    public Produto(String codigo, String nome, double preco, int quantidadeEmEstoque) {
+    public Produto(String codigo, String nome, String descricao, double preco, int quantidadeEmEstoque) {
         this.codigo = codigo;
         this.nome = nome;
+        this.descricao = descricao;
         this.preco = preco;
         this.quantidadeEmEstoque = quantidadeEmEstoque;
         this.ativo = true;
@@ -39,6 +40,6 @@ public class Produto {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s - R$ %.2f (%d em estoque)", codigo, nome, preco, quantidadeEmEstoque);
+        return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", codigo, nome, preco, quantidadeEmEstoque, descricao);
     }
 }
