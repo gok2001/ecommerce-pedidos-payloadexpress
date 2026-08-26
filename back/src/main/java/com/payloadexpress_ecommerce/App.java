@@ -10,9 +10,9 @@ public class App {
 
         PedidoUtils.calcularFrete(); // chama calcularFrete
         
-        Produto teclado = new Produto("TEC-001", "Teclatek", 12.00, 2000, "Teclado do Paraguai");
+        Produto teclado = new Produto("TEC-001", "Teclatek", "Teclado Paraguai", 12.00, 2000);
 
-        Produto monitor = new Produto("Tec-002", "Monitek", 200, 1000, "Monitor Paraguai");
+        Produto monitor = new Produto("Tec-002", "Monitek", "Monitor Paraguai", 200, 1000);
 
         System.out.println(teclado);
         System.out.println(monitor);

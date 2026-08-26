@@ -10,36 +10,37 @@ public class Produto {
     private boolean ativo;
     private double peso;
 
-    public Produto (String codigo, String nome, double preco, int quantidadeEmEstoque, String descricao){
+    public Produto(String codigo, String nome, String descricao, double preco, int quantidadeEmEstoque) {
         this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidadeEmEstoque = quantidadeEmEstoque;
         this.ativo = true;
-        }
-
-    public String getNome(){
-        return this.nome;
     }
 
-    public void setNome(String nome){
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public boolean isAtvio(){           //não se usa "get" em boolean usa-se "is""
+    public boolean isAtivo() {
         return ativo;
     }
 
-    public boolean temEstoqueDisponivel(int quantidadeDesejada){
-        return ativo && this.quantidadeEmEstoque >= quantidadeDesejada;
+    public boolean temEstoqueDisponivel(int quantidadeDesejada) {
+        return ativo && quantidadeEmEstoque >= quantidadeDesejada;
+    }
+
+    public void baixarEstoque(int quantidade) {
+        this.quantidadeEmEstoque = this.quantidadeEmEstoque - quantidade;
     }
 
     @Override
     public String toString() {
         return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", this.codigo, this.nome, this.preco, this.quantidadeEmEstoque, this.descricao);
-    }
-    public void baixarEstoque(int quantidade){
-        this.quantidadeEmEstoque = this.quantidadeEmEstoque - quantidade;
     }
 }
