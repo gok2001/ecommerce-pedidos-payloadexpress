@@ -6,8 +6,16 @@ import java.util.List;
 // Classe responsável pela criação de pedidos
 public class Pedido {
     private String numero;
-    private Cliente cliente = new Cliente();
+    private Cliente cliente;
     private String data;
     private String situacao;
     private List<String> listaDeItens = new ArrayList<>();
+
+    private Pedido() {
+
+    }
+
+    public adicionarItem() {
+
+    }
 }
