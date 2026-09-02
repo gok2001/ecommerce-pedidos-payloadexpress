@@ -30,6 +30,6 @@ public class App {
         "99999-9999",
         "Rua A, 123");
 
-        System.out.println(cliente.pessoa());
+        System.out.println(cliente.retornaIdentificacaoCliente());
     }    
 }

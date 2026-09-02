@@ -21,7 +21,7 @@ public class Cliente {
         return nome;
     }
 
-    public void setnome (String nome) {
+    public void setNome (String nome) {
         this.nome = nome;
     }
 
@@ -41,23 +41,23 @@ public class Cliente {
         this.Email = Email;
     }
 
-    public String gettelefone(){
+    public String getTelefone(){
         return telefone;
     }
 
-    public void settelefone(String telefone){
+    public void setTelefone(String telefone){
         this.telefone = telefone; 
     }
 
-    public String getendereco(){
+    public String getEndereco(){
         return endereco;
     }
 
-    public void setendereco(String endereco){
+    public void setEndereco(String endereco){
         this.endereco = endereco;
     }
 
-    public String pessoa(){
+    public String retornaIdentificacaoCliente(){
         return "Nome: " + nome +
                 "\nCPF: " + CPF +
                 "\nEmail: " + Email +
