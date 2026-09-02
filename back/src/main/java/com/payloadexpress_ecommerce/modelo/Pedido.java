@@ -19,6 +19,26 @@ public class Pedido {
         this.listaDeItens = listaDeItens;
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public String situacao() {
+        return situacao;
+    }
+
+    public List<String> getListaDeItens() {
+        return listaDeItens;
+    }
+
     public adicionarItem() {
 
     }
