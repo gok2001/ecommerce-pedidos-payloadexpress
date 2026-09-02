@@ -7,7 +7,7 @@ public class ItemPedido {
     private double precoPraticado;
 
     public ItemPedido(){
-        
+
     }
 
     public ItemPedido(Produto produto, long quantidade, double precoPraticado){
@@ -38,6 +38,11 @@ public class ItemPedido {
 
     public void setPrecoPraticado(double precoPraticado) {
         this.precoPraticado = precoPraticado;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("[%s] %s", this.produto, this.quantidade, this.precoPraticado);
     }
 
     public double calcularSubtotal(){
