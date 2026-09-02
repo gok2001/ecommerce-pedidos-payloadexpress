@@ -11,8 +11,12 @@ public class Pedido {
     private String situacao;
     private List<String> listaDeItens = new ArrayList<>();
 
-    private Pedido() {
-
+    private Pedido(String numero, Cliente cliente, String data, String situacao, List<String> listaDeItens) {
+        this.numero = numero;
+        this.cliente = cliente;
+        this.data = data;
+        this.situacao = situacao;
+        this.listaDeItens = listaDeItens;
     }
 
     public adicionarItem() {
