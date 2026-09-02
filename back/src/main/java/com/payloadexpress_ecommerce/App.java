@@ -1,7 +1,7 @@
 package com.payloadexpress_ecommerce;
 import com.payloadexpress_ecommerce.util.PedidoUtils;
 import com.payloadexpress_ecommerce.modelo.Produto;
-// import com.payloadexpress_ecommerce.modelo.Cliente;
+import com.payloadexpress_ecommerce.modelo.Cliente;
 // import com.payloadexpress_ecommerce.modelo.Pedido;
 
 public class App {
@@ -22,5 +22,14 @@ public class App {
 
         teclado.baixarEstoque(1300);
         System.out.println(teclado);
+
+        Cliente cliente = new Cliente(
+        "João",
+        "123.456.789-00",
+        "joao@email.com",
+        "99999-9999",
+        "Rua A, 123");
+
+        System.out.println(cliente.pessoa());
     }    
 }
