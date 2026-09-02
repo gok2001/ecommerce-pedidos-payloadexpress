@@ -6,7 +6,9 @@ public class ItemPedido {
     private long quantidade;
     private double precoPraticado;
 
-
+    public ItemPedido(){
+        
+    }
 
     public ItemPedido(Produto produto, long quantidade, double precoPraticado){
         this.produto = produto;
