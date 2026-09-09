@@ -1,6 +1,7 @@
 package com.payloadexpress_ecommerce.modelo;
 
 // Classe responsável pelo cadastro de clientes
+//Herda dados da class Pessoa
 public class Cliente extends Pessoa {
 
     private String email;
