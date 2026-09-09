@@ -1,69 +1,55 @@
 package com.payloadexpress_ecommerce.modelo;
 
-//Classe responsavel pelo cadastro de clientes
-public class Cliente {
+// Classe responsável pelo cadastro de clientes
+public class Cliente extends Pessoa {
 
-    private String nome;
-    private String CPF;
-    private String Email;
+    private String email;
     private String telefone;
     private String endereco;
 
-    public Cliente(String nome, String CPF, String Email, String telefone, String endereco) {
-        this.nome = nome;
-        this.CPF = CPF;
-        this.Email = Email;
-        this.telefone = telefone;
-        this.endereco = endereco;
+    public Cliente(String nome, String CPF, String email, String telefone, String endereco) {
+
+        super(nome, CPF);
+
+        setEmail(email);
+        setTelefone(telefone);
+        setEndereco(endereco);
     }
 
-    public String getnome(){
-        return nome;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNome (String nome) {
-        this.nome = nome;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getCPF(){
-        return CPF;
-    }
-
-    public void setCPF(String CPF){
-        this.CPF = CPF;
-    }
-
-    public String Email(){
-        return Email;
-    }
-
-    public void setEmail(String Email){
-        this.Email = Email;
-    }
-
-    public String getTelefone(){
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone){
-        this.telefone = telefone; 
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public String getEndereco(){
+    public String getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco){
+    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-    public String retornaIdentificacaoCliente(){
-        return "Nome: " + nome +
-                "\nCPF: " + CPF +
-                "\nEmail: " + Email +
-                "\ntelefone: " + telefone +
-                "\nendereco: " + endereco;
+    @Override
+    public String getIdentificacao() {
+        return getNome() + " (CPF " + getDocumento() + ")";
     }
 
-    
+    public String retornaIdentificacaoCliente() {
+        return "Nome: " + getNome()
+                + "\nCPF: " + getDocumento()
+                + "\nEmail: " + getEmail()
+                + "\nTelefone: " + getTelefone()
+                + "\nEndereço: " + getEndereco();
+    }
 }
