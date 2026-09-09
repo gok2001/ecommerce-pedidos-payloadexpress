@@ -23,20 +23,40 @@ public class Pedido {
         return numero;
     }
 
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
     public Cliente getCliente() {
         return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public String getData() {
         return data;
     }
 
+    public void setData(String data) {
+        this.data = data;
+    }
+
     public String situacao() {
         return situacao;
     }
 
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
     public List<String> getListaDeItens() {
         return listaDeItens;
+    }
+
+    public void setListaDeItens(List<ItemPedido> listaDeItens) {
+        this.listaDeItens = listaDeItens;
     }
 
     public void adicionarItem(ItemPedido item) {
