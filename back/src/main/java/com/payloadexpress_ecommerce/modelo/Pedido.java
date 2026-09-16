@@ -51,7 +51,7 @@ public class Pedido {
         this.situacao = situacao;
     }
 
-    public List<String> getListaDeItens() {
+    public List<ItemPedido> getListaDeItens() {
         return listaDeItens;
     }
 
