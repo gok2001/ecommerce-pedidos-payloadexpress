@@ -58,4 +58,8 @@ public class Pedido {
     public void adicionarItem(ItemPedido item) {
         listaDeItens.add(item);
     }
+
+    public double calcularValorTotal() {
+        
+    }
 }
