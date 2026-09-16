@@ -40,6 +40,10 @@ public class Pedido {
     }
 
     public void setData(String data) {
+        if (data == null || data.isBlank()) {
+            throw new IllegalArgumentException("Data não pode ser nula ou vazia");
+        }
+
         this.data = data;
     }
 
