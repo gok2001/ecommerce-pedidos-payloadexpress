@@ -12,7 +12,7 @@ public class Pedido {
     private String situacao;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
 
-    public Pedido(String numero, Cliente cliente, String data, String situacao, List<ItemPedido> listaDeItens) {
+    public Pedido(String numero, Cliente cliente, String data, String situacao) {
         this.numero = numero;
         this.cliente = cliente;
         this.data = data;
