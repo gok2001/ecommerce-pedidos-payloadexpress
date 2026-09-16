@@ -52,6 +52,10 @@ public class Pedido {
     }
 
     public void setSituacao(String situacao) {
+        if (situacao == null || situacao.isBlank()) {
+            throw new IllegalArgumentException("Situação não pode ser nula ou vazia.");
+        }
+
         this.situacao = situacao;
     }
 
