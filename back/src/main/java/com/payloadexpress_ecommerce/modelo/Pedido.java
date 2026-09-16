@@ -10,10 +10,10 @@ public class Pedido {
     private String numero;
     private Cliente cliente;
     private String data;
-    private String situacao;
+    private SituacaoPedido situacao;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
 
-    public Pedido(String numero, Cliente cliente, String data, String situacao) {
+    public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacao) {
         this.numero = numero;
         setCliente(cliente);
         setData(data);
@@ -60,7 +60,7 @@ public class Pedido {
         this.data = data;
     }
 
-    public String getSituacao() {
+    public SituacaoPedido getSituacao() {
         return situacao;
     }
 
@@ -68,11 +68,11 @@ public class Pedido {
      * Define a situação atual do pedido.
      * 
      * @param situacao situação que será atribuída ao pedido.
-     * @throws IllegalArgumentException se a situação for nula ou estiver vazia.
+     * @throws IllegalArgumentException se a situação for nula.
      */
-    public void setSituacao(String situacao) {
-        if (!campoValido(situacao)) {
-            throw new IllegalArgumentException("Situação não pode ser nula ou vazia.");
+    public void setSituacao(SituacaoPedido situacao) {
+        if (situacao == null) {
+            throw new IllegalArgumentException("Situação não pode ser nula.");
         }
 
         this.situacao = situacao;
