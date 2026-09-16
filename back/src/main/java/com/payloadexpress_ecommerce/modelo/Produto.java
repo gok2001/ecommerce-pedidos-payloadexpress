@@ -1,16 +1,18 @@
 package com.payloadexpress_ecommerce.modelo;
 
+import java.math.BigDecimal;
+
 public class Produto {
 
     private String codigo;
     private String nome;
     private String descricao;
-    private double preco;
+    private BigDecimal preco;
     private int quantidadeEmEstoque;
     private boolean ativo;
-    private double peso;
+    //private double peso;
 
-    public Produto(String codigo, String nome, String descricao, double preco, int quantidadeEmEstoque) {
+    public Produto(String codigo, String nome, String descricao, BigDecimal preco, int quantidadeEmEstoque) {
         this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
