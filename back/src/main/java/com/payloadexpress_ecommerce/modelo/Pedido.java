@@ -16,7 +16,6 @@ public class Pedido {
         this.cliente = cliente;
         this.data = data;
         this.situacao = situacao;
-        this.listaDeItens = listaDeItens;
     }
 
     public String getNumero() {
