@@ -28,6 +28,12 @@ public class Pedido {
         return cliente;
     }
 
+    /**
+     * Define o cliente associado ao pedido.
+     * 
+     * @param cliente cliente que será associado ao pedido.
+     * @throws IllegalArgumentException se o cliente for nulo.
+     */
     public void setCliente(Cliente cliente) {
         if (cliente == null) {
             throw new IllegalArgumentException("Cliente não pode ser nulo.");
@@ -40,6 +46,12 @@ public class Pedido {
         return data;
     }
 
+    /**
+     * Define a data do pedido.
+     * 
+     * @param data data que será associada ao pedido.
+     * @throws IllegalArgumentException se a data for nula ou estiver vazia.
+     */
     public void setData(String data) {
         if (!campoValido(data)) {
             throw new IllegalArgumentException("Data não pode ser nula ou vazia");
@@ -52,6 +64,12 @@ public class Pedido {
         return situacao;
     }
 
+    /**
+     * Define a situação atual do pedido.
+     * 
+     * @param situacao situação que será atribuída ao pedido.
+     * @throws IllegalArgumentException se a situação for nula ou estiver vazia.
+     */
     public void setSituacao(String situacao) {
         if (!campoValido(situacao)) {
             throw new IllegalArgumentException("Situação não pode ser nula ou vazia.");
