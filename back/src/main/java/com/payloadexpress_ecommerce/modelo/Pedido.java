@@ -2,6 +2,7 @@ package com.payloadexpress_ecommerce.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 
 // Classe responsável pela criação de pedidos
 public class Pedido {
@@ -58,7 +59,13 @@ public class Pedido {
         listaDeItens.add(item);
     }
 
-    public double calcularValorTotal() {
-        
+    public BigDecimal calcularValorTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (ItemPedido item : listaDeItens) {
+            total = total.add(item.calcularSubtotal());
+        }
+
+        return total;
     }
 }
