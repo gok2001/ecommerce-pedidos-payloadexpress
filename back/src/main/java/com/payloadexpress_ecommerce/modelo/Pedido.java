@@ -68,4 +68,17 @@ public class Pedido {
 
         return total;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "Pedido{numero='%s', cliente=%s, data='%s', situacao='%s', listaDeItens=%s, valorTotal=%s}",
+            numero,
+            cliente,
+            data,
+            situacao,
+            listaDeItens,
+            calcularValorTotal()
+        );
+    }
 }
