@@ -2,6 +2,7 @@ package com.payloadexpress_ecommerce.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 import java.math.BigDecimal;
 
 // Classe responsável pela criação de pedidos
@@ -60,7 +61,7 @@ public class Pedido {
     }
 
     public List<ItemPedido> getListaDeItens() {
-        return listaDeItens;
+        return Collections.unmodifiableList(listaDeItens);
     }
 
     public void adicionarItem(ItemPedido item) {
