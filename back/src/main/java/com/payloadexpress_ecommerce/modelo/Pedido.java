@@ -14,9 +14,9 @@ public class Pedido {
 
     public Pedido(String numero, Cliente cliente, String data, String situacao) {
         this.numero = numero;
-        this.cliente = cliente;
-        this.data = data;
-        this.situacao = situacao;
+        setCliente(cliente);
+        setData(data);
+        setSituacao(situacao);
     }
 
     public String getNumero() {
