@@ -7,14 +7,14 @@ public class Boleto extends FormaPagamento{
 
     //Atributos
     private String codigoDeBarras;
-    private LocalDate dataDeVencimeto;
+    private LocalDate dataDeVencimento;
 
 
     //Metodo construtor
     Boleto(BigDecimal valor, LocalDate dataDoPagamento, String codigoDeBarras, LocalDate dataDeVencimento){
         super(valor, dataDoPagamento);
         setCodigoDeBarras(codigoDeBarras);
-        setDataDeVencimeto(dataDeVencimento);
+        setDataDeVencimento(dataDeVencimento);
     }
 
 
@@ -31,16 +31,16 @@ public class Boleto extends FormaPagamento{
         this.codigoDeBarras = codigoDeBarras;
     }
 
-    public LocalDate getDataDeVencimeto() {
-        return dataDeVencimeto;
+    public LocalDate getDataDeVencimento() {
+        return dataDeVencimento;
     }
 
-    public void setDataDeVencimeto(LocalDate dataDeVencimeto) {
-        if (dataDeVencimeto == null || dataDeVencimeto.isBefore(LocalDate.now())) {
+    public void setDataDeVencimento(LocalDate dataDeVencimento) {
+        if (dataDeVencimento == null || dataDeVencimento.isBefore(LocalDate.now())) {
              throw new IllegalArgumentException("A data de vencimento deve ser maior ou igual a data atual.");
         }
 
-        this.dataDeVencimeto = dataDeVencimeto;
+        this.dataDeVencimento = dataDeVencimento;
     }
 
 

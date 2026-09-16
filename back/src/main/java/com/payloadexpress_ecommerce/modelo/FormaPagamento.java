@@ -13,7 +13,7 @@ public abstract class FormaPagamento {
         setDataDoPagamento(dataDoPagamento);
     }
 
-    public BigDecimal getValo(){
+    public BigDecimal getValor(){
         return valor;
     }
 

@@ -5,13 +5,16 @@ import java.time.LocalDate;
 
 public class Pix extends FormaPagamento{
 
+    //Atributo
     private String chave;
 
+    //Metodo construtor
     public Pix(BigDecimal valor, LocalDate dataDoPagamento, String chave){
         super(valor, dataDoPagamento);
         setChave(chave);
     }
 
+    //Metodos gets e setters
     public String getChave() {
         return chave;
     }
