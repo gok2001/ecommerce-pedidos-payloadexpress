@@ -55,10 +55,6 @@ public class Pedido {
         return listaDeItens;
     }
 
-    public void setListaDeItens(List<ItemPedido> listaDeItens) {
-        this.listaDeItens = listaDeItens;
-    }
-
     public void adicionarItem(ItemPedido item) {
         listaDeItens.add(item);
     }
