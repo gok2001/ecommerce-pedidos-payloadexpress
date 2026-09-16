@@ -23,10 +23,6 @@ public class Pedido {
         return numero;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
     public Cliente getCliente() {
         return cliente;
     }
