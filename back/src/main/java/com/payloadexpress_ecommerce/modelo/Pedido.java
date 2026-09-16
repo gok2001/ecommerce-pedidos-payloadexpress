@@ -43,7 +43,7 @@ public class Pedido {
         this.data = data;
     }
 
-    public String situacao() {
+    public String getSituacao() {
         return situacao;
     }
 
