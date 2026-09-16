@@ -41,7 +41,7 @@ public class Pedido {
     }
 
     public void setData(String data) {
-        if (data == null || data.isBlank()) {
+        if (!campoValido(data)) {
             throw new IllegalArgumentException("Data não pode ser nula ou vazia");
         }
 
@@ -53,11 +53,19 @@ public class Pedido {
     }
 
     public void setSituacao(String situacao) {
-        if (situacao == null || situacao.isBlank()) {
+        if (!campoValido(situacao)) {
             throw new IllegalArgumentException("Situação não pode ser nula ou vazia.");
         }
 
         this.situacao = situacao;
+    }
+
+    private boolean campoValido(String campo) {
+        if (campo == null || campo.isBlank()) {
+            return false;
+        }
+
+        return true;
     }
 
     public List<ItemPedido> getListaDeItens() {
