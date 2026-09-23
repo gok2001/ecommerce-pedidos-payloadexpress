@@ -81,6 +81,10 @@ public class Produto {
     }
 
     public void baixarEstoque(int quantidade) {
+        if (quantidade > this.quantidadeEmEstoque) {
+            throw new IllegalArgumentException("Quantidade a ser retirada do estoque não pode ser maior que a quantidade em estoque.")
+        }
+
         this.quantidadeEmEstoque = this.quantidadeEmEstoque - quantidade;
     }
 
