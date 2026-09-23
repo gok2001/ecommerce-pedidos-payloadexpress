@@ -30,7 +30,7 @@ public class Produto {
 
     public void setNome(String nome) {
         if (nome == null || nome.isEmpty()) {
-            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.")
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.");
         }
 
         this.nome = nome;
@@ -42,7 +42,7 @@ public class Produto {
 
     public void setDescricao(String descricao) {
         if (descricao == null || descricao.isEmpty()) {
-            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.")
+            throw new IllegalArgumentException("Descrição não pode ser nula ou vazia.");
         }
 
         this.descricao = descricao;
@@ -53,6 +53,10 @@ public class Produto {
     }
 
     public void setPreco(BigDecimal preco) {
+        if (preco == null || preco.signum() == -1 ) {
+            throw new IllegalArgumentException("Preço não pode ser nulo ou negativo.");
+        }
+
         this.preco = preco;
     }
 
