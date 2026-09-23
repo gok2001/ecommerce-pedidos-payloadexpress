@@ -133,4 +133,24 @@ public class Produto {
     public String toString() {
         return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", this.codigo, this.nome, this.preco, this.quantidadeEmEstoque, this.descricao);
     }
+
+    @Override 
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Produto)) {
+            return false;
+        }
+
+        Produto produto = (Produto) o;
+
+        return this.codigo.equals(produto.codigo);
+    }
+
+    @Override 
+    public int hashCode() {
+        return codigo.hashCode();
+    }
 }
