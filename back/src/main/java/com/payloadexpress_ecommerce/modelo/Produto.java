@@ -41,6 +41,10 @@ public class Produto {
     }
 
     public void setDescricao(String descricao) {
+        if (descricao == null || descricao.isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.")
+        }
+
         this.descricao = descricao;
     }
 
