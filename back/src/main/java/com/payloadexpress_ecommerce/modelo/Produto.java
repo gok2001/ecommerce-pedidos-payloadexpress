@@ -18,7 +18,7 @@ public class Produto {
         setDescricao(descricao);
         setPreco(preco);
         setQuantidadeEmEstoque(quantidadeEmEstoque);
-        
+
         this.ativo = true;
     }
 
@@ -83,8 +83,8 @@ public class Produto {
     }
 
     public void baixarEstoque(int quantidade) {
-        if (quantidade > this.quantidadeEmEstoque) {
-            throw new IllegalArgumentException("Quantidade a ser retirada do estoque não pode ser maior que a quantidade em estoque.")
+        if (quantidade > this.quantidadeEmEstoque || quantidade < 0) {
+            throw new IllegalArgumentException("Quantidade inválida a ser retirada.");
         }
 
         this.quantidadeEmEstoque = this.quantidadeEmEstoque - quantidade;
