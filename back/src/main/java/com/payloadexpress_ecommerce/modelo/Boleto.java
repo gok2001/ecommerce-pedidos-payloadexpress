@@ -62,7 +62,7 @@ public class Boleto extends FormaPagamento implements ProcessadorPagamento{
     //metodos da interface
     @Override
     public boolean processar(BigDecimal valor) {
-        System.out.println("Enviando cobrança em Boleto com o código de barras: " + codigoDeBarras);
+        System.out.println("Enviando cobrança em Boleto com o código de barras: " + codigoDeBarras + "\n Pagamento válido até o dia "+dataDeVencimento);
         return true; // aprovação imediata
     }
     @Override

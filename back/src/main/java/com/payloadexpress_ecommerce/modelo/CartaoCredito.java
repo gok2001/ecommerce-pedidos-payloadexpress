@@ -71,7 +71,7 @@ public class CartaoCredito extends FormaPagamento implements ProcessadorPagament
     //metodos da interface
     @Override
     public boolean processar(BigDecimal valor) {
-        System.out.println("Enviando cobrança em Cartão de Crédito com o numero mascarado: " + numeroMascarado);
+        System.out.println("Enviando cobrança em Cartão de Crédito com o numero mascarado: " + numeroMascarado + (quantidadeDeParcelas == 0?".":".\nQuantidade de parcelas: "+quantidadeDeParcelas));
         return true; // aprovação imediata
     }
     @Override
