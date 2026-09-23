@@ -29,6 +29,10 @@ public class Produto {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.")
+        }
+
         this.nome = nome;
     }
 
