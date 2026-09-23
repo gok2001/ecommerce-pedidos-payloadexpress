@@ -3,7 +3,7 @@ package com.payloadexpress_ecommerce.modelo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class CartaoCredito extends FormaPagamento{
+public class CartaoCredito extends FormaPagamento implements ProcessadorPagamento{
 
     //Atributos
     private String numeroMascarado;
@@ -65,5 +65,21 @@ public class CartaoCredito extends FormaPagamento{
         // simulação: um Cartão de Crédito é aprovado na hora
         System.out.println("Processando Cartão de Crédito para o pagamento");
         return true;
+    }
+
+
+    //metodos da interface
+    @Override
+    public boolean processar(BigDecimal valor) {
+        System.out.println("Enviando cobrança em Cartão de Crédito com o numero mascarado: " + numeroMascarado);
+        return true; // aprovação imediata
+    }
+    @Override
+    public String getComprovante() {
+        return "Cartão de Crédito-" + System.currentTimeMillis();
+    }
+    @Override
+    public String getDescricao() {
+        return "Cartão de Crédito - numero mascarado " + numeroMascarado;
     }
 }
