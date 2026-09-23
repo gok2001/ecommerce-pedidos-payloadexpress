@@ -30,10 +30,18 @@ public class Produto {
         return nome;
     }
 
+    /**
+     * Define o nome do produto.
+     *
+     * @param nome nome do produto, não pode ser nulo ou vazio
+     * @throws IllegalArgumentException se o nome for nulo ou vazio
+     */
     public void setNome(String nome) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.");
         }
+
+        validarTexto(nome, "Nome");
 
         this.nome = nome;
     }
@@ -42,10 +50,18 @@ public class Produto {
         return descricao;
     }
 
+    /**
+     * Define a descrição do produto.
+     *
+     * @param descricao descrição do produto, não pode ser nula ou vazia
+     * @throws IllegalArgumentException se a descrição for nula ou vazia
+     */
     public void setDescricao(String descricao) {
         if (descricao == null || descricao.isBlank()) {
             throw new IllegalArgumentException("Descrição não pode ser nula ou vazia.");
         }
+
+        validarTexto(descricao, "Descrição");
 
         this.descricao = descricao;
     }
@@ -54,6 +70,12 @@ public class Produto {
         return preco;
     }
 
+    /**
+     * Define o preço do produto.
+     *
+     * @param preco preço do produto, não pode ser nulo ou negativo
+     * @throws IllegalArgumentException se o preço for nulo ou negativo
+     */
     public void setPreco(BigDecimal preco) {
         if (preco == null || preco.signum() == -1 ) {
             throw new IllegalArgumentException("Preço não pode ser nulo ou negativo.");
@@ -66,6 +88,12 @@ public class Produto {
         return quantidadeEmEstoque;
     }
 
+    /**
+     * Define a quantidade disponível em estoque.
+     *
+     * @param quantidadeEmEstoque quantidade em estoque, não pode ser negativa
+     * @throws IllegalArgumentException se a quantidade for negativa
+     */
     public void setQuantidadeEmEstoque(int quantidadeEmEstoque) {
         if (quantidadeEmEstoque < 0) {
             throw new IllegalArgumentException("Quantidade em estoque não pode ser negativa.");
@@ -92,6 +120,19 @@ public class Produto {
         }
 
         this.quantidadeEmEstoque = this.quantidadeEmEstoque - quantidade;
+    }
+
+    /** 
+     * Valida textos utilizados nos atributos do produto.
+     *
+     * @param valor texto a ser validado
+     * @param nomeCampo nome do campo utilizado na mensagem de erro
+     * @throws IllegalArgumentException se o texto for nulo ou vazio
+     */
+    private void validarTexto(String valor, String nomeCampo) {
+        if (valor == null || valor.isBlank()) {
+            throw new IllegalArgumentException(nomeCampo + " não pode ser nulo ou vazio.");
+        }
     }
 
     @Override
