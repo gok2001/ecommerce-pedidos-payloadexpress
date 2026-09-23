@@ -13,10 +13,12 @@ public class Produto {
 
     public Produto(String codigo, String nome, String descricao, BigDecimal preco, int quantidadeEmEstoque) {
         this.codigo = codigo;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.quantidadeEmEstoque = quantidadeEmEstoque;
+        
+        setNome(nome);
+        setDescricao(descricao);
+        setPreco(preco);
+        setQuantidadeEmEstoque(quantidadeEmEstoque);
+        
         this.ativo = true;
     }
 
