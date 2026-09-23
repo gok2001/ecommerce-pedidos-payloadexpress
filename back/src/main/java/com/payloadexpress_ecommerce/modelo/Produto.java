@@ -148,4 +148,9 @@ public class Produto {
 
         return this.codigo.equals(produto.codigo);
     }
+
+    @Override 
+    public int hashCode() {
+        return codigo.hashCode();
+    }
 }
