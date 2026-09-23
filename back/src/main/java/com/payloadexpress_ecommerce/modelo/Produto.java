@@ -43,7 +43,7 @@ public class Produto {
     }
 
     public void setDescricao(String descricao) {
-        if (descricao == null || descricao.isEmpty()) {
+        if (descricao == null || descricao.isBlank()) {
             throw new IllegalArgumentException("Descrição não pode ser nula ou vazia.");
         }
 
