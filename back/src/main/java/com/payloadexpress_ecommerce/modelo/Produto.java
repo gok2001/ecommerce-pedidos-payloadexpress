@@ -79,7 +79,7 @@ public class Produto {
     }
 
     public boolean temEstoqueDisponivel(int quantidadeDesejada) {
-        if (quantidadeDesejada < 0) {
+        if (quantidadeDesejada <= 0) {
             throw new IllegalArgumentException("Quantidade inválida.");
         }
 
