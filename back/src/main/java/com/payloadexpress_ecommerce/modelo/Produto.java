@@ -37,9 +37,6 @@ public class Produto {
      * @throws IllegalArgumentException se o nome for nulo ou vazio
      */
     public void setNome(String nome) {
-        if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.");
-        }
 
         validarTexto(nome, "Nome");
 
@@ -57,9 +54,6 @@ public class Produto {
      * @throws IllegalArgumentException se a descrição for nula ou vazia
      */
     public void setDescricao(String descricao) {
-        if (descricao == null || descricao.isBlank()) {
-            throw new IllegalArgumentException("Descrição não pode ser nula ou vazia.");
-        }
 
         validarTexto(descricao, "Descrição");
 
