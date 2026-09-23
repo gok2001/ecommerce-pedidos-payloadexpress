@@ -10,7 +10,6 @@ public class Produto {
     private BigDecimal preco;
     private int quantidadeEmEstoque;
     private boolean ativo;
-    //private double peso;
 
     public Produto(String codigo, String nome, String descricao, BigDecimal preco, int quantidadeEmEstoque) {
         this.codigo = codigo;
@@ -21,12 +20,40 @@ public class Produto {
         this.ativo = true;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public int getQuantidadeEmEstoque() {
+        return quantidadeEmEstoque;
+    }
+
+    public void setQuantidadeEmEstoque(int quantidadeEmEstoque) {
+        this.quantidadeEmEstoque = quantidadeEmEstoque;
     }
 
     public boolean isAtivo() {
