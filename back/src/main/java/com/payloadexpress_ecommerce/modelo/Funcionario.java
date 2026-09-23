@@ -19,6 +19,12 @@ public class Funcionario extends Pessoa {
         this.matricula = matricula;
     }
 
+    public void setCargo(String cargo) {
+        if (cargo == null || cargo.isBlank()){
+            throw new IllegalArgumentException("Cargo é obrigatória");
+        }
+        this.cargo = cargo;
+    }
     @Override 
     public String getIdentificacao() {
         return getNome() + " -matrícula " + matricula;

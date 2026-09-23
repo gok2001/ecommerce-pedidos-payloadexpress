@@ -3,7 +3,7 @@ package com.payloadexpress_ecommerce.modelo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Boleto extends FormaPagamento{
+public class Boleto extends FormaPagamento implements ProcessadorPagamento{
 
     //Atributos
     private String codigoDeBarras;
@@ -56,5 +56,21 @@ public class Boleto extends FormaPagamento{
         // simulação: um Boleto é aprovado na hora
         System.out.println("Processando Boleto para o código " + codigoDeBarras);
         return true;
+    }
+
+
+    //metodos da interface
+    @Override
+    public boolean processar(BigDecimal valor) {
+        System.out.println("Enviando cobrança em Boleto com o código de barras: " + codigoDeBarras + "\n Pagamento válido até o dia "+dataDeVencimento);
+        return true; // aprovação imediata
+    }
+    @Override
+    public String getComprovante() {
+        return "Boleto-" + System.currentTimeMillis();
+    }
+    @Override
+    public String getDescricao() {
+        return "Boleto - código de barras " + codigoDeBarras;
     }
 }
