@@ -87,7 +87,7 @@ public class Produto {
     }
 
     public void baixarEstoque(int quantidade) {
-        if (quantidade > this.quantidadeEmEstoque || quantidade < 0) {
+        if (quantidade > this.quantidadeEmEstoque || quantidade < 0 || quantidade == 0) {
             throw new IllegalArgumentException("Quantidade inválida a ser retirada.");
         }
 
