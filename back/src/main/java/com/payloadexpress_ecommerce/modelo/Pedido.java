@@ -12,6 +12,7 @@ public class Pedido {
     private String data;
     private SituacaoPedido situacao;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
+    private FormaPagamento formaPagamento;
 
     public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacao) {
         this.numero = numero;
@@ -54,7 +55,7 @@ public class Pedido {
      */
     public void setData(String data) {
         if (!campoValido(data)) {
-            throw new IllegalArgumentException("Data não pode ser nula ou vazia");
+            throw new IllegalArgumentException("Data não pode ser nula ou vazia.");
         }
 
         this.data = data;
@@ -90,8 +91,13 @@ public class Pedido {
         return Collections.unmodifiableList(listaDeItens);
     }
 
-    public void adicionarItem(ItemPedido item) {
-        listaDeItens.add(item);
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void adicionarItem(Produto produto, long quantidade) {
+        ItemPedido itemPedido = new ItemPedido(produto, quantidade, produto.getPreco());
+        listaDeItens.add(itemPedido);
     }
 
     public BigDecimal calcularValorTotal() {
@@ -102,6 +108,22 @@ public class Pedido {
         }
 
         return total;
+    }
+
+    public void pagar(FormaPagamento formaPagamento) {
+        if (listaDeItens.isEmpty()) {
+            throw new IllegalArgumentException("Pedido não pode ser pago sem itens.");
+        }
+
+        if (formaPagamento == null) {
+            throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
+        }
+
+        this.formaPagamento = formaPagamento;
+
+        if (!formaPagamento.processar()) {
+            throw new IllegalStateException("Pagamento não foi processado.");
+        }
     }
 
     @Override
