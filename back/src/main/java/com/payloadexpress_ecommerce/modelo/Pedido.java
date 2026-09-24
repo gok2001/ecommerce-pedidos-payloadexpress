@@ -55,7 +55,7 @@ public class Pedido {
      */
     public void setData(String data) {
         if (!campoValido(data)) {
-            throw new IllegalArgumentException("Data não pode ser nula ou vazia");
+            throw new IllegalArgumentException("Data não pode ser nula ou vazia.");
         }
 
         this.data = data;
@@ -108,6 +108,22 @@ public class Pedido {
         }
 
         return total;
+    }
+
+    public void pagar(FormaPagamento formaPagamento) {
+        if (listaDeItens.isEmpty()) {
+            throw new IllegalArgumentException("Pedido não pode ser pago sem itens.");
+        }
+
+        if (formaPagamento == null) {
+            throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
+        }
+
+        this.formaPagamento = formaPagamento;
+
+        if (!formaPagamento.processar()) {
+            throw new IllegalStateException("Pagamentos não foi processado.");
+        }
     }
 
     @Override
