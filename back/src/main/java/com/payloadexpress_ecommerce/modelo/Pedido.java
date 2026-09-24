@@ -122,7 +122,7 @@ public class Pedido {
         this.formaPagamento = formaPagamento;
 
         if (!formaPagamento.processar()) {
-            throw new IllegalStateException("Pagamentos não foi processado.");
+            throw new IllegalStateException("Pagamento não foi processado.");
         }
     }
 
