@@ -35,9 +35,10 @@ public class ItemPedido {
     }
 
     public void setQuantidade(long quantidade) {
-        if (quantidade < 0){
-            throw new IllegalArgumentException("Quantidade não pode ser negativo: "+quantidade);
+        if (quantidade <= 0){
+            throw new IllegalArgumentException("Quantidade não pode ser maior que zero");
         }
+
         this.quantidade = quantidade;
     }
 
