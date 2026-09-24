@@ -12,6 +12,7 @@ public class Pedido {
     private String data;
     private SituacaoPedido situacao;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
+    private FormaPagamento formaPagamento;
 
     public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacao) {
         this.numero = numero;
@@ -88,6 +89,10 @@ public class Pedido {
 
     public List<ItemPedido> getListaDeItens() {
         return Collections.unmodifiableList(listaDeItens);
+    }
+
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
     }
 
     public void adicionarItem(Produto produto, long quantidade) {
