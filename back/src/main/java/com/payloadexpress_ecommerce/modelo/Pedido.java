@@ -90,8 +90,9 @@ public class Pedido {
         return Collections.unmodifiableList(listaDeItens);
     }
 
-    public void adicionarItem(ItemPedido item) {
-        listaDeItens.add(item);
+    public void adicionarItem(Produto produto, long quantidade) {
+        ItemPedido itemPedido = new ItemPedido(produto, quantidade, produto.getPreco());
+        listaDeItens.add(itemPedido);
     }
 
     public BigDecimal calcularValorTotal() {
