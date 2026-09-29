@@ -90,15 +90,10 @@ public class Pedido {
         return Collections.unmodifiableList(listaDeItens);
     }
 
-    public FormaPagamento getFormaPagamento() {
+    public ProcessadorPagamento getFormaPagamento() {
         return formaPagamento;
     }
 
-    /**
-     * Sobrecarga:
-     * adicionarItem(produto) assume quantidade 1 e delega
-     * para a implementação principal.
-     */
     public void adicionarItem(Produto produto) {
         adicionarItem(produto, 1);
     }
