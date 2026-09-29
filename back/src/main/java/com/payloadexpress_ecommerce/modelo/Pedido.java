@@ -134,6 +134,12 @@ public class Pedido {
         }
     }
 
+    private void validarPedidoParaPagamento() {
+        if (listaDeItens.isEmpty()) {
+            throw new IllegalStateException("Pedido não pode ser pago sem itens.");
+        }
+    }
+
     private void validarFormaPagamento(ProcessadorPagamento formaPagamento) {
         if (formaPagamento == null) {
             throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
