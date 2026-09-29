@@ -7,15 +7,18 @@ import java.math.BigDecimal;
 
 // Classe responsável pela criação de pedidos
 public class Pedido {
+
     private String numero;
     private Cliente cliente;
     private String data;
     private SituacaoPedido situacao;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
+
     private FormaPagamento formaPagamento;
 
     public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacao) {
         this.numero = numero;
+
         setCliente(cliente);
         setData(data);
         setSituacao(situacao);
@@ -80,11 +83,7 @@ public class Pedido {
     }
 
     private boolean campoValido(String campo) {
-        if (campo == null || campo.isBlank()) {
-            return false;
-        }
-
-        return true;
+        return campo != null && !campo.isBlank();
     }
 
     public List<ItemPedido> getListaDeItens() {
