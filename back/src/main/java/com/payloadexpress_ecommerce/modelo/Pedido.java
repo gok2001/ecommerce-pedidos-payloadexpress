@@ -94,6 +94,15 @@ public class Pedido {
         return formaPagamento;
     }
 
+    /**
+     * Sobrecarga:
+     * adicionarItem(produto) assume quantidade 1 e delega
+     * para a implementação principal.
+     */
+    public void adicionarItem(Produto produto) {
+        adicionarItem(produto, 1);
+    }
+
     public void adicionarItem(Produto produto, long quantidade) {
         ItemPedido itemPedido = new ItemPedido(produto, quantidade, produto.getPreco());
         listaDeItens.add(itemPedido);
@@ -108,7 +117,7 @@ public class Pedido {
 
         return total;
     }
-
+    
     public void pagar(FormaPagamento formaPagamento) {
         if (listaDeItens.isEmpty()) {
             throw new IllegalArgumentException("Pedido não pode ser pago sem itens.");
