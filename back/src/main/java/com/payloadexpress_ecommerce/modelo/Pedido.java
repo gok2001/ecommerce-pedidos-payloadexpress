@@ -118,20 +118,19 @@ public class Pedido {
         return total;
     }
     
-    public void pagar(FormaPagamento formaPagamento) {
-        if (listaDeItens.isEmpty()) {
-            throw new IllegalArgumentException("Pedido não pode ser pago sem itens.");
+    public boolean pagar(ProcessadorPagamento formaPagamento) {
+        validarPedidoParaPagamento();
+        validarFormaPagamento(formaPagamento);
+
+        BigDecimal valorTotal = calcularValorTotal();
+
+        boolean processado = formaPagamento.processar(valorTotal);
+
+        if (processado) {
+            this.formaPagamento = formaPagamento;
         }
 
-        if (formaPagamento == null) {
-            throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
-        }
-
-        this.formaPagamento = formaPagamento;
-
-        if (!formaPagamento.processar()) {
-            throw new IllegalStateException("Pagamento não foi processado.");
-        }
+        return processado;
     }
 
     public boolean tentarFormasDePagamento(List<ProcessadorPagamento> formasPagamento) {
