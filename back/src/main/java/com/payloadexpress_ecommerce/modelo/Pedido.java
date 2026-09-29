@@ -134,6 +134,12 @@ public class Pedido {
         }
     }
 
+    private void validarFormaPagamento(ProcessadorPagamento formaPagamento) {
+        if (formaPagamento == null) {
+            throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
+        }
+    }
+
     @Override
     public String toString() {
         return String.format(
