@@ -7,15 +7,18 @@ import java.math.BigDecimal;
 
 // Classe responsável pela criação de pedidos
 public class Pedido {
+
     private String numero;
     private Cliente cliente;
     private String data;
     private SituacaoPedido situacao;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
-    private FormaPagamento formaPagamento;
+
+    private ProcessadorPagamento formaPagamento;
 
     public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacao) {
         this.numero = numero;
+
         setCliente(cliente);
         setData(data);
         setSituacao(situacao);
@@ -80,19 +83,19 @@ public class Pedido {
     }
 
     private boolean campoValido(String campo) {
-        if (campo == null || campo.isBlank()) {
-            return false;
-        }
-
-        return true;
+        return campo != null && !campo.isBlank();
     }
 
     public List<ItemPedido> getListaDeItens() {
         return Collections.unmodifiableList(listaDeItens);
     }
 
-    public FormaPagamento getFormaPagamento() {
+    public ProcessadorPagamento getFormaPagamento() {
         return formaPagamento;
+    }
+
+    public void adicionarItem(Produto produto) {
+        adicionarItem(produto, 1);
     }
 
     public void adicionarItem(Produto produto, long quantidade) {
@@ -109,20 +112,52 @@ public class Pedido {
 
         return total;
     }
+    
+    public boolean pagar(ProcessadorPagamento formaPagamento) {
+        validarPedidoParaPagamento();
+        validarFormaPagamento(formaPagamento);
 
-    public void pagar(FormaPagamento formaPagamento) {
-        if (listaDeItens.isEmpty()) {
-            throw new IllegalArgumentException("Pedido não pode ser pago sem itens.");
+        BigDecimal valorTotal = calcularValorTotal();
+
+        boolean processado = formaPagamento.processar(valorTotal);
+
+        if (processado) {
+            this.formaPagamento = formaPagamento;
         }
 
+        return processado;
+    }
+
+    public boolean tentarFormasDePagamento(List<ProcessadorPagamento> formasPagamento) {
+        validarPedidoParaPagamento();
+
+        if (formasPagamento == null || formasPagamento.isEmpty()) {
+            throw new IllegalArgumentException("A lista de formas de pagamento não pode ser nula ou vazia.");
+        }
+
+        BigDecimal valorTotal = calcularValorTotal();
+
+        for (ProcessadorPagamento formaPagamento : formasPagamento) {
+            validarFormaPagamento(formaPagamento);
+
+            if (formaPagamento.processar(valorTotal)) {
+                this.formaPagamento = formaPagamento;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void validarPedidoParaPagamento() {
+        if (listaDeItens.isEmpty()) {
+            throw new IllegalStateException("Pedido não pode ser pago sem itens.");
+        }
+    }
+
+    private void validarFormaPagamento(ProcessadorPagamento formaPagamento) {
         if (formaPagamento == null) {
             throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
-        }
-
-        this.formaPagamento = formaPagamento;
-
-        if (!formaPagamento.processar()) {
-            throw new IllegalStateException("Pagamento não foi processado.");
         }
     }
 
