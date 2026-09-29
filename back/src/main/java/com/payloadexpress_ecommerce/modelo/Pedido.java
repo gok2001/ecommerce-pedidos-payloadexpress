@@ -14,7 +14,7 @@ public class Pedido {
     private SituacaoPedido situacao;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
 
-    private FormaPagamento formaPagamento;
+    private ProcessadorPagamento formaPagamento;
 
     public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacao) {
         this.numero = numero;
@@ -132,6 +132,27 @@ public class Pedido {
         if (!formaPagamento.processar()) {
             throw new IllegalStateException("Pagamento não foi processado.");
         }
+    }
+
+    public boolean tentarFormasDePagamento(List<ProcessadorPagamento> formasPagamento) {
+        validarPedidoParaPagamento();
+
+        if (formasPagamento == null || formasPagamento.isEmpty()) {
+            throw new IllegalArgumentException("A lista de formas de pagamento não pode ser nula ou vazia.");
+        }
+
+        BigDecimal valorTotal = calcularValorTotal();
+
+        for (ProcessadorPagamento formaPagamento : formasPagamento) {
+            validarFormaPagamento(formaPagamento);
+
+            if (formaPagamento.processar(valorTotal)) {
+                this.formaPagamento = formaPagamento;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void validarPedidoParaPagamento() {
