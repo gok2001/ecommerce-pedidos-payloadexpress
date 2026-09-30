@@ -2,7 +2,7 @@ package com.payloadexpress_ecommerce.modelo;
 
 import java.math.BigDecimal;
 
-import com.payloadexpress_ecommerce.excecao.EstoqueInsulficienteException;
+import com.payloadexpress_ecommerce.excecao.EstoqueInsuficienteException;
 
 public class Produto {
 
@@ -44,12 +44,12 @@ public class Produto {
         return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", this.codigo, this.nome, this.preco, this.quantidadeEmEstoque, this.descricao);
     }
 
-    public void baixarEstoque(int quantidade) throws EstoqueInsulficienteException {
+    public void baixarEstoque(int quantidade) throws EstoqueInsuficienteException {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser positiva.");
         }
         if (quantidade > this.quantidadeEmEstoque) {
-            throw new EstoqueInsulficienteException(this, quantidade);
+            throw new EstoqueInsuficienteException(this, quantidade);
         }
         this.quantidadeEmEstoque -= quantidade;
     }
