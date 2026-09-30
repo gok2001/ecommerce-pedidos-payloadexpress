@@ -2,12 +2,12 @@ package com.payloadexpress_ecommerce.excecao;
 
 import com.payloadexpress_ecommerce.modelo.Produto;
 
-public class EstoqueInsulficienteException extends ECommerceException {
+public class EstoqueInsuficienteException extends ECommerceException {
 
     private final Produto produto;    
     private final int quantidadeSolicitada;
 
-    public EstoqueInsulficienteException(Produto produto, int quantidade) {
+    public EstoqueInsuficienteException(Produto produto, int quantidade) {
         super("Estoque insuficiente de " + produto.getNome()
             + ": disponível " + produto.getQuantidadeEmEstoque()
             + ", solicitado " + quantidade);
