@@ -39,11 +39,6 @@ public class Produto {
         return ativo && quantidadeEmEstoque >= quantidadeDesejada;
     }
 
-    @Override
-    public String toString() {
-        return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", this.codigo, this.nome, this.preco, this.quantidadeEmEstoque, this.descricao);
-    }
-
     public void baixarEstoque(int quantidade) throws EstoqueInsuficienteException {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser positiva.");
@@ -53,4 +48,9 @@ public class Produto {
         }
         this.quantidadeEmEstoque -= quantidade;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", this.codigo, this.nome, this.preco, this.quantidadeEmEstoque, this.descricao);
+    }  
 }
