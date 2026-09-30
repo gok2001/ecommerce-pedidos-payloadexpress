@@ -9,7 +9,7 @@ public class Funcionario extends Pessoa {
         
         super(nome, cpf);
         setMatricula(matricula);
-        setCargo(cargo);
+        // setCargo(cargo);
     }
 
     public void setMatricula(String matricula) {
