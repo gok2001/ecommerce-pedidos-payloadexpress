@@ -3,7 +3,7 @@ package com.payloadexpress_ecommerce.modelo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Pix extends FormaPagamento{
+public class Pix extends FormaPagamento implements ProcessadorPagamento{
 
     //Atributo
     private String chave;
@@ -37,5 +37,21 @@ public class Pix extends FormaPagamento{
     @Override
     public String getResumo(){
         return super.getResumo() + " (chave " + chave + ")";
+    }
+
+
+    //metodos da interface
+    @Override
+    public boolean processar(BigDecimal valor) {
+        System.out.println("Enviando cobrança Pix para a chave " + chave);
+        return true; // aprovação imediata
+    }
+    @Override
+    public String getComprovante() {
+        return "PIX-" + System.currentTimeMillis();
+    }
+    @Override
+    public String getDescricao() {
+        return "Pix - chave " + chave;
     }
 }
