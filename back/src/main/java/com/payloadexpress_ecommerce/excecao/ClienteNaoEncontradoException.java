@@ -5,7 +5,7 @@ public class ClienteNaoEncontradoException extends ECommerceException {
     private final String id;
 
     public ClienteNaoEncontradoException(String id) {
-        super("Cliente com id " + id + "não encontrado");
+        super("Cliente com id " + id + " não encontrado");
 
         this.id = id;
     }
