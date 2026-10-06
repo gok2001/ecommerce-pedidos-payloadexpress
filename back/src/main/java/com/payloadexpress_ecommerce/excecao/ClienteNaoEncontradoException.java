@@ -2,15 +2,15 @@ package com.payloadexpress_ecommerce.excecao;
 
 public class ClienteNaoEncontradoException extends ECommerceException {
     
-    private final String id;
+    private final String identificador;
 
-    public ClienteNaoEncontradoException(String id) {
-        super("Cliente com id " + id + " não encontrado");
+    public ClienteNaoEncontradoException(String identificador) {
+        super("Cliente com id " + identificador + " não encontrado");
 
-        this.id = id;
+        this.identificador = identificador;
     }
 
-    public String getId() {
-        return id;
+    public String getIdentificador() {
+        return identificador;
     }
 }
