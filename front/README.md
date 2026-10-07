@@ -1,91 +1,16 @@
-# Sistema de Gestão de Pedidos — E-commerce
+# React + Vite
 
-> Atividade desafiadora da Unidade Curricular **Desenvolvimento Back-end**
-> Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas — Turma CSTADS601
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Equipe / Squad
+Currently, two official plugins are available:
 
-| Nome | Papel na Aula 01 |
-|---|---|
-| _(Guilherme Orige Kernbichler)_ | Responsável do dia |
-| _(Davi Livino Mazoti)_ | |
-| _(João Paulo Arábia da Silva)_ | |
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Descrição do desafio
+## React Compiler
 
-_(A equipe de desenvolvimento Payload Express, recebeu a demanda de construir um sistema de gestão 
-de pedidos para um e-commerce de produtos eletrônicos, contemplando cadastro de produtos,
-clientes, pedidos e processamento de pagamentos.)_
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Funcionalidades previstas
+## Expanding the ESLint configuration
 
-- [ ] Cadastro e gerenciamento de produtos
-- [ ] Cadastro e gerenciamento de clientes
-- [ ] Criação e gerenciamento de pedidos
-- [ ] Processamento de pagamentos (cartão, boleto, Pix)
-- [ ] Testes automatizados (unitários e de integração)
-- [ ] Pipeline de CI/CD
-- [ ] API REST para consumo por um front-end
-
-## Tecnologias
-
-- Java
-- Maven
-- Git / GitHub
-- _(demais tecnologias serão adicionadas ao longo do semestre: JUnit, Spring Boot, banco de
-  dados, GitHub Actions...)_
-
-## Estrutura de pastas
-
-```
-ecommerce-pedidos-payloadexpress/
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── com/senai/ecommerce/
-│   │           ├── modelo/
-│   │           ├── servico/
-│   │           ├── repositorio/
-│   │           └── util/
-│   └── test/
-│       └── java/
-│           └── com/senai/ecommerce/
-├── pom.xml
-├── README.md
-└── .gitignore
-```
-
-## Como rodar o projeto
-
-_(Preencher a partir das próximas aulas, conforme o projeto evoluir.)_
-
-## Roadmap do projeto (por aula)
-
-| Aula | Entrega |
-|---|---|
-| 01 | Repositório criado, estruturado, com README e commit inicial |
-| 02 | Fluxo de branches e primeiro Pull Request revisado |
-| 03 | Classe utilitária (Utils) do domínio |
-| 04 | Classes de domínio inicial (Produto, Cliente, Pedido, ItemPedido) |
-| 05 | Encapsulamento e abstração aplicados |
-| 06 | Hierarquia de formas de pagamento (herança) |
-| 07 | Relacionamentos entre classes do domínio |
-| 08 | Módulo de pagamento polimórfico |
-| 09 | Tratamento de exceções |
-| 10 | Suíte de testes unitários |
-| 11 | Suíte de testes de integração + relatório de cobertura |
-| 12 | Persistência: conexão, Create e Read |
-| 13 | Persistência: Update, Delete e padrão DAO/Repository |
-| 14 | Migração para Spring Boot |
-| 15 | API REST + pipeline CI/CD |
-| 16 | Entrega final, documentação e apresentação |
-
-## Combinado da equipe (ética e convivência)
-
-1. _(Respeito mútuo)_
-2. _(Colaboração entre os integrantes)_
-3. _(Divisão justa das tarefas)_
-
-## Licença
-
-Projeto acadêmico — Faculdade de Tecnologia SENAI "Antonio Adolpho Lobbe".
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
