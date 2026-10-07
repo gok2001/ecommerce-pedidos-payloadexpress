@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Collections;
 import java.math.BigDecimal;
 
+import com.payloadexpress_ecommerce.excecao.PedidoInvalidoException;
+
 // Classe responsável pela criação de pedidos
 public class Pedido {
 
@@ -149,9 +151,9 @@ public class Pedido {
         return false;
     }
 
-    private void validarPedidoParaPagamento() {
+    private void validarPedidoParaPagamento() throws PedidoInvalidoException {
         if (listaDeItens.isEmpty()) {
-            throw new IllegalStateException("Pedido não pode ser pago sem itens.");
+            throw new PedidoInvalidoException("pedido não possui itens");
         }
     }
 
