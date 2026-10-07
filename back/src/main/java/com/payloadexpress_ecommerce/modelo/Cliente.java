@@ -22,7 +22,7 @@ public class Cliente extends Pessoa {
     }
 
     public void setEmail(String email) {
-        String regex = "[A-Za-z0-9+_.-]+@[A-Za-z0-9+.-]+\\.[a-z]+$";
+        String regex = "[A-Za-z0-9+_.-]+@[A-Za-z0-9+.-]+\\.[A-Za-z]{2,}$";
 
         if (email == null || !email.matches(regex)) {
             throw new IllegalArgumentException("Formato de email inválido");
