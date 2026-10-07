@@ -13,17 +13,18 @@ public class Pedido {
     private String numero;
     private Cliente cliente;
     private String data;
-    private SituacaoPedido situacao;
+    private SituacaoPedido situacaoPedido;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
 
     private ProcessadorPagamento formaPagamento;
+    private SituacaoPagamento situacaoPagamento;
 
-    public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacao) {
+    public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacaoPedido, SituacaoPagamento situacaoPagamento) {
         this.numero = numero;
 
         setCliente(cliente);
         setData(data);
-        setSituacao(situacao);
+        setSituacaoPedido(situacaoPedido);
     }
 
     public String getNumero() {
@@ -66,26 +67,34 @@ public class Pedido {
         this.data = data;
     }
 
-    public SituacaoPedido getSituacao() {
-        return situacao;
+    public SituacaoPedido getSituacaoPedido() {
+        return situacaoPedido;
     }
 
     /**
      * Define a situação atual do pedido.
      * 
-     * @param situacao situação que será atribuída ao pedido.
+     * @param situacaoPedido situação que será atribuída ao pedido.
      * @throws IllegalArgumentException se a situação for nula.
      */
-    public void setSituacao(SituacaoPedido situacao) {
-        if (situacao == null) {
-            throw new IllegalArgumentException("Situação não pode ser nula.");
+    public void setSituacaoPedido(SituacaoPedido situacaoPedido) {
+        if (situacaoPedido == null) {
+            throw new IllegalArgumentException("Situação de pedido não pode ser nula.");
         }
 
-        this.situacao = situacao;
+        this.situacaoPedido = situacaoPedido;
     }
 
-    private boolean campoValido(String campo) {
-        return campo != null && !campo.isBlank();
+    public SituacaoPagamento getSituacaoPagamento() {
+        return situacaoPagamento;
+    }
+
+    public void setSituacaoPagamento(SituacaoPagamento situacaoPagamento) {
+        if (situacaoPagamento == null) {
+            throw new IllegalArgumentException("Situação de pagamento não pode ser nula.");
+        }
+
+        this.situacaoPagamento = situacaoPagamento;
     }
 
     public List<ItemPedido> getListaDeItens() {
@@ -163,6 +172,10 @@ public class Pedido {
         }
     }
 
+    private boolean campoValido(String campo) {
+        return campo != null && !campo.isBlank();
+    }
+
     @Override
     public String toString() {
         return String.format(
@@ -170,7 +183,7 @@ public class Pedido {
             numero,
             cliente,
             data,
-            situacao,
+            situacaoPedido,
             listaDeItens,
             calcularValorTotal()
         );
