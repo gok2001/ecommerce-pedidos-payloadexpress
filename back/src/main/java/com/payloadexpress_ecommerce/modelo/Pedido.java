@@ -115,7 +115,7 @@ public class Pedido {
         return total;
     }
     
-    public boolean pagar(ProcessadorPagamento formaPagamento) {
+    public boolean pagar(ProcessadorPagamento formaPagamento) throws PedidoInvalidoException {
         validarPedidoParaPagamento();
         validarFormaPagamento(formaPagamento);
 
@@ -130,7 +130,7 @@ public class Pedido {
         return processado;
     }
 
-    public boolean tentarFormasDePagamento(List<ProcessadorPagamento> formasPagamento) {
+    public boolean tentarFormasDePagamento(List<ProcessadorPagamento> formasPagamento) throws PedidoInvalidoException {
         validarPedidoParaPagamento();
 
         if (formasPagamento == null || formasPagamento.isEmpty()) {
