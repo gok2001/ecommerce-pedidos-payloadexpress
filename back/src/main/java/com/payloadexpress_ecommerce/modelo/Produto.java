@@ -120,6 +120,7 @@ public class Produto {
         }
       
         this.quantidadeEmEstoque -= quantidade;
+        System.out.println("Baixa no estoque com sucesso");
 
     }
 
