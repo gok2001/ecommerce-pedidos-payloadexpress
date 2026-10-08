@@ -1,0 +1,129 @@
+.produto-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.campo label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.campo input,
+.campo textarea {
+    width: 100%;
+    padding: 11px 12px;
+
+    box-sizing: border-box;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 7px;
+
+    outline: none;
+
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    border-color: #888888;
+
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.campo textarea {
+    resize: vertical;
+}
+
+
+/* BOTÕES */
+
+.botoes-produto {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: 5px;
+}
+
+.botoes-produto button {
+    padding: 11px 22px;
+
+    border: none;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease,
+                transform 0.1s ease;
+}
+
+.botoes-produto button:active {
+    transform: scale(0.98);
+}
+
+
+/* BOTÃO CADASTRAR */
+
+.botoes-produto button[type="submit"] {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+.botoes-produto button[type="submit"]:hover {
+    background-color: #444444;
+}
+
+
+/* BOTÃO EXIBIR */
+
+.botao-exibir {
+    background-color: #eeeeee;
+    color: #222222;
+
+    border: 1px solid #dddddd !important;
+}
+
+.botao-exibir:hover {
+    background-color: #e2e2e2;
+}
+
+
+/* CELULAR */
+
+@media (max-width: 576px) {
+
+    .produto-form {
+        margin: 0 15px;
+        padding: 20px;
+    }
+
+    .botoes-produto {
+        flex-direction: column;
+    }
+
+    .botoes-produto button {
+        width: 100%;
+    }
+}
