@@ -135,6 +135,7 @@ public class Pedido {
 
         if (processado) {
             this.formaPagamento = formaPagamento;
+            this.situacaoPagamento = SituacaoPagamento.PAGO;
         }
 
         return processado;
@@ -154,6 +155,7 @@ public class Pedido {
 
             if (formaPagamento.processar(valorTotal)) {
                 this.formaPagamento = formaPagamento;
+                this.situacaoPagamento = SituacaoPagamento.PAGO;
                 return true;
             }
         }
