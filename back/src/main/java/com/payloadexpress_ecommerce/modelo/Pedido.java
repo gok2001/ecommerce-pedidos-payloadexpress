@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.math.BigDecimal;
 
 import com.payloadexpress_ecommerce.excecao.PedidoInvalidoException;
+import com.payloadexpress_ecommerce.excecao.PagamentoRecusadoException;
 
 // Classe responsável pela criação de pedidos
 public class Pedido {
@@ -125,7 +126,7 @@ public class Pedido {
         return total;
     }
     
-    public boolean pagar(ProcessadorPagamento formaPagamento) throws PedidoInvalidoException {
+    public boolean pagar(ProcessadorPagamento formaPagamento) throws PedidoInvalidoException, PagamentoRecusadoException {
         validarPedidoParaPagamento();
         validarFormaPagamento(formaPagamento);
 
@@ -136,6 +137,8 @@ public class Pedido {
         if (processado) {
             this.formaPagamento = formaPagamento;
             this.situacaoPagamento = SituacaoPagamento.PAGO;
+        } else {
+            throw new PagamentoRecusadoException(formaPagamento);
         }
 
         return processado;
