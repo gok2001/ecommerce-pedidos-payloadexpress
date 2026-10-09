@@ -186,11 +186,12 @@ public class Pedido {
     @Override
     public String toString() {
         return String.format(
-            "Pedido{numero='%s', cliente=%s, data='%s', situacao='%s', listaDeItens=%s, valorTotal=%s}",
+            "Pedido{numero='%s', cliente=%s, data='%s', situacaoPedido='%s', situacaoPagamento='%s', listaDeItens=%s, valorTotal=%s}",
             numero,
             cliente,
             data,
             situacaoPedido,
+            situacaoPagamento,
             listaDeItens,
             calcularValorTotal()
         );
