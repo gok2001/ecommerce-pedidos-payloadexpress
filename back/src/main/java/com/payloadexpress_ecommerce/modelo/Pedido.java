@@ -25,6 +25,7 @@ public class Pedido {
         setCliente(cliente);
         setData(data);
         setSituacaoPedido(situacaoPedido);
+        setSituacaoPagamento(situacaoPagamento);
     }
 
     public String getNumero() {
