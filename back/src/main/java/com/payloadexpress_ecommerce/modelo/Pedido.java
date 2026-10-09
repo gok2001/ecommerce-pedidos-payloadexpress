@@ -165,6 +165,10 @@ public class Pedido {
         if (listaDeItens.isEmpty()) {
             throw new PedidoInvalidoException("pedido não possui itens");
         }
+
+        if (situacaoPagamento == SituacaoPagamento.PAGO) {
+            throw new PedidoInvalidoException("pedido já foi pago");
+        }
     }
 
     private void validarFormaPagamento(ProcessadorPagamento formaPagamento) {
