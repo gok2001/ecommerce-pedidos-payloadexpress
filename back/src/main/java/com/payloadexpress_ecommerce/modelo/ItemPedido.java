@@ -8,10 +8,6 @@ public class ItemPedido {
     private long quantidade;
     private BigDecimal precoPraticado;
 
-    public ItemPedido(){
-
-    }
-
     public ItemPedido(Produto produto, long quantidade, BigDecimal precoPraticado){
         setProduto(produto);
         setQuantidade(quantidade);
