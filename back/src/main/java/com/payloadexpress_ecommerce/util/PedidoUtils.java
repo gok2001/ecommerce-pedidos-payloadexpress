@@ -133,16 +133,5 @@ public class PedidoUtils {
 
         return recibo.toString();
     }
-    
-
-
-/*    private static double calcularFrete(double pesoEmQuilos, double subtotal) {
-        double quilosCobrados = Math.ceil(pesoEmQuilos);
-        double freteCalculado = quilosCobrados * VALOR_POR_QUILO;
-        double freteFinal = Math.max(freteCalculado, FRETE_MINIMO);
-
-        return freteFinal;
-    }
-     */
 }
 
