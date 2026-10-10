@@ -109,6 +109,10 @@ public class Pedido {
     }
 
     public void adicionarItem(Produto produto, int quantidade) throws EstoqueInsuficienteException {
+        if (this.situacaoPagamento == SituacaoPagamento.PAGO) {
+            throw new IllegalArgumentException("Não é possível adicionar itens ao pedido pago.");
+        }
+
         if (!produto.temEstoqueDisponivel(quantidade)) {
             throw new EstoqueInsuficienteException(produto, quantidade);
         }
