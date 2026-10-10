@@ -33,6 +33,12 @@ public class Pedido {
         return numero;
     }
 
+    public void setNumero(String numero) {
+        if (!campoValido(numero)) {
+            throw new IllegalArgumentException("Número não pode ser nulo ou vazio.");
+        }
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
