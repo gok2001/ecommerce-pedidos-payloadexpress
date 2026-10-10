@@ -1,6 +1,9 @@
 package com.payloadexpress_ecommerce;
 import com.payloadexpress_ecommerce.util.PedidoUtils;
 import com.payloadexpress_ecommerce.modelo.Produto;
+
+import java.math.BigDecimal;
+
 import com.payloadexpress_ecommerce.modelo.Cliente;
 // import com.payloadexpress_ecommerce.modelo.Pedido;
 
@@ -10,9 +13,9 @@ public class App {
 
         PedidoUtils.calcularFrete(); // chama calcularFrete
         
-        Produto teclado = new Produto("TEC-001", "Teclatek", "Teclado Paraguai", 12.00, 2000);
+        Produto teclado = new Produto("TEC-001", "Teclatek", "Teclado Paraguai", BigDecimal.valueOf(12.00), 2000);
 
-        Produto monitor = new Produto("Tec-002", "Monitek", "Monitor Paraguai", 200, 1000);
+        Produto monitor = new Produto("Tec-002", "Monitek", "Monitor Paraguai", BigDecimal.valueOf(200), 1000);
 
         System.out.println(teclado);
         System.out.println(monitor);
