@@ -144,28 +144,6 @@ public class Pedido {
         return processado;
     }
 
-    public boolean tentarFormasDePagamento(List<ProcessadorPagamento> formasPagamento) throws PedidoInvalidoException {
-        validarPedidoParaPagamento();
-
-        if (formasPagamento == null || formasPagamento.isEmpty()) {
-            throw new IllegalArgumentException("A lista de formas de pagamento não pode ser nula ou vazia.");
-        }
-
-        BigDecimal valorTotal = calcularValorTotal();
-
-        for (ProcessadorPagamento formaPagamento : formasPagamento) {
-            validarFormaPagamento(formaPagamento);
-
-            if (formaPagamento.processar(valorTotal)) {
-                this.formaPagamento = formaPagamento;
-                this.situacaoPagamento = SituacaoPagamento.PAGO;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void validarPedidoParaPagamento() throws PedidoInvalidoException {
         if (situacaoPagamento == SituacaoPagamento.PAGO) {
             throw new PedidoInvalidoException("pedido já foi pago");
