@@ -18,15 +18,13 @@ public class Pedido {
     private List<ItemPedido> listaDeItens = new ArrayList<>();
 
     private ProcessadorPagamento formaPagamento;
-    private SituacaoPagamento situacaoPagamento;
+    private SituacaoPagamento situacaoPagamento = SituacaoPagamento.ABERTO;
 
-    public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacaoPedido, SituacaoPagamento situacaoPagamento) {
-        this.numero = numero;
-
+    public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacaoPedido) {
+        setNumero(numero);
         setCliente(cliente);
         setData(data);
         setSituacaoPedido(situacaoPedido);
-        setSituacaoPagamento(situacaoPagamento);
     }
 
     public String getNumero() {
@@ -95,14 +93,6 @@ public class Pedido {
 
     public SituacaoPagamento getSituacaoPagamento() {
         return situacaoPagamento;
-    }
-
-    private void setSituacaoPagamento(SituacaoPagamento situacaoPagamento) {
-        if (situacaoPagamento == null) {
-            throw new IllegalArgumentException("Situação de pagamento não pode ser nula.");
-        }
-
-        this.situacaoPagamento = situacaoPagamento;
     }
 
     public List<ItemPedido> getListaDeItens() {
