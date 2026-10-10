@@ -22,7 +22,10 @@ public class Pedido {
     private SituacaoPagamento situacaoPagamento = SituacaoPagamento.ABERTO;
 
     public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacaoPedido) {
-        setNumero(numero);
+        if (!campoValido(numero)) {
+            throw new IllegalArgumentException("Número não pode ser nulo ou vazio.");
+        }
+
         setCliente(cliente);
         setData(data);
         setSituacaoPedido(situacaoPedido);
@@ -30,12 +33,6 @@ public class Pedido {
 
     public String getNumero() {
         return numero;
-    }
-
-    public void setNumero(String numero) {
-        if (!campoValido(numero)) {
-            throw new IllegalArgumentException("Número não pode ser nulo ou vazio.");
-        }
     }
 
     public Cliente getCliente() {
