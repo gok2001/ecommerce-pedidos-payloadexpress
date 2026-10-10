@@ -12,7 +12,7 @@ public class PedidoUtils {
     private static final double FRETE_MINIMO = 15.00;
     private static final double TAXA_DESCONTO = 0.10;
     private static final double DESCONTO_MAXIMO = 50.00;
-    private static final double VALOR_FRETE_GRATIS = 300.00;
+    // private static final double VALOR_FRETE_GRATIS = 300.00;
 
     private PedidoUtils() {
         // Classe utilitária não deve ser instanciada.
@@ -25,16 +25,16 @@ public class PedidoUtils {
         return String.format("PED-2026-%05d", sequencial);
     }
 
-    private static double calcularSubtotal(double[] precos, int[] quantidades) {
+    // private static double calcularSubtotal(double[] precos, int[] quantidades) {
 
-        double somaPrecos = 0;
+    //     double somaPrecos = 0;
 
-        for (int i = 0; i < precos.length; i++) {
-            somaPrecos += precos[i] * quantidades[i];
-        }
+    //     for (int i = 0; i < precos.length; i++) {
+    //         somaPrecos += precos[i] * quantidades[i];
+    //     }
 
-        return somaPrecos;
-    }
+    //     return somaPrecos;
+    // }
 
 
     // Inicio Att. Joao_Arabia
