@@ -5,7 +5,6 @@ import com.payloadexpress_ecommerce.modelo.Produto;
 import java.math.BigDecimal;
 
 import com.payloadexpress_ecommerce.modelo.Cliente;
-// import com.payloadexpress_ecommerce.modelo.Pedido;
 
 public class App {
 
@@ -23,8 +22,12 @@ public class App {
         System.out.println(teclado.temEstoqueDisponivel(1300)); //true
         System.out.println(monitor.temEstoqueDisponivel(2000)); //false
 
-        teclado.baixarEstoque(1300);
-        System.out.println(teclado);
+        try {
+            teclado.baixarEstoque(1300);
+            System.out.println(teclado);
+        } catch (Exception e) {
+            System.out.println("Erro ao baixar estoque: " + e.getMessage());
+        }
 
         Cliente cliente = new Cliente(
         "João",
