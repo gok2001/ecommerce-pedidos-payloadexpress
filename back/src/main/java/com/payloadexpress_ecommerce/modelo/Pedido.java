@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.math.BigDecimal;
 
 import com.payloadexpress_ecommerce.excecao.PedidoInvalidoException;
+import com.payloadexpress_ecommerce.excecao.EstoqueInsuficienteException;
 import com.payloadexpress_ecommerce.excecao.PagamentoRecusadoException;
 
 // Classe responsável pela criação de pedidos
@@ -103,11 +104,15 @@ public class Pedido {
         return formaPagamento;
     }
 
-    public void adicionarItem(Produto produto) {
+    public void adicionarItem(Produto produto) throws EstoqueInsuficienteException {
         adicionarItem(produto, 1);
     }
 
-    public void adicionarItem(Produto produto, long quantidade) {
+    public void adicionarItem(Produto produto, int quantidade) throws EstoqueInsuficienteException {
+        if (!produto.temEstoqueDisponivel(quantidade)) {
+            throw new EstoqueInsuficienteException(produto, quantidade);
+        }
+
         ItemPedido itemPedido = new ItemPedido(produto, quantidade, produto.getPreco());
         listaDeItens.add(itemPedido);
     }
