@@ -38,7 +38,7 @@ public class Pix extends FormaPagamento {
     }
 
     @Override
-    public boolean processar(BigDecimal valor) {
+    public boolean processar() {
         registrarComprovante("PIX");
         return true;
     }
