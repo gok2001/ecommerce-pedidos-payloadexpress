@@ -30,6 +30,19 @@ public abstract class FormaPagamento implements ProcessadorPagamento {
         return dataDoPagamento;
     }
 
+    @Override
+    public final boolean processar(BigDecimal valorCobrado) {
+        if (valorCobrado == null || valorCobrado.signum() <= 0) {
+            throw new IllegalArgumentException("Valor cobrado deve ser positivo.");
+        }
+
+        if (valorCobrado.compareTo(valor) != 0) {
+            throw new IllegalArgumentException("Valor do pagamento difere do total do pedido.");
+        }
+
+        return processar();
+    }
+
     public abstract boolean processar();
 
     public String getResumo() {
