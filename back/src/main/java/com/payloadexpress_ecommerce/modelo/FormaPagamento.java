@@ -45,6 +45,12 @@ public abstract class FormaPagamento implements ProcessadorPagamento {
 
     public abstract boolean processar();
 
+    protected void registrarComprovante(String prefixo) {
+        if (comprovante == null) {
+            comprovante = prefixo + "-" + java.util.UUID.randomUUID();
+        }
+    }
+
     public String getResumo() {
         return String.format("%s no valor de R$ %s",
                              getClass().getSimpleName(), valor);
