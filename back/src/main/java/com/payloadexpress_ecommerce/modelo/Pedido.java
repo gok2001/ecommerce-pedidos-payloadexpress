@@ -1,34 +1,46 @@
 package com.payloadexpress_ecommerce.modelo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import com.payloadexpress_ecommerce.excecao.PedidoInvalidoException;
 import com.payloadexpress_ecommerce.excecao.EstoqueInsuficienteException;
 import com.payloadexpress_ecommerce.excecao.PagamentoRecusadoException;
+import com.payloadexpress_ecommerce.excecao.PedidoInvalidoException;
 
 // Classe responsável pela criação de pedidos
 public class Pedido {
 
-    private String numero;
-    private Cliente cliente;
-    private String data;
+    private final String numero;
+    private final Cliente cliente;
+    private final String data;
+    private final List<ItemPedido> listaDeItens = new ArrayList<>();
     private SituacaoPedido situacaoPedido = SituacaoPedido.PENDENTE;
-    private List<ItemPedido> listaDeItens = new ArrayList<>();
-
     private ProcessadorPagamento formaPagamento;
     private SituacaoPagamento situacaoPagamento = SituacaoPagamento.ABERTO;
+    private String comprovante;
 
     public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacaoPedido) {
-        if (!campoValido(numero)) {
-            throw new IllegalArgumentException("Número não pode ser nulo ou vazio.");
+        if (numero == null || numero.isBlank()) {
+            throw new IllegalArgumentException("Número do pedido é obrigatório.");
         }
 
-        this.numero = numero;
-        setCliente(cliente);
-        setData(data);
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente é obrigatório.");
+        }
+
+        if (data == null || data.isBlank()) {
+            throw new IllegalArgumentException("Data é obrigatória.");
+        }
+
+        if (situacaoPedido != SituacaoPedido.PENDENTE) {
+            throw new IllegalArgumentException("Novo pedido deve começar PENDENTE.");
+        }
+
+        this.numero = numero.trim();
+        this.cliente = cliente;
+        this.data = data.trim();
     }
 
     public String getNumero() {
@@ -39,80 +51,28 @@ public class Pedido {
         return cliente;
     }
 
-    /**
-     * Define o cliente associado ao pedido.
-     * 
-     * @param cliente cliente que será associado ao pedido.
-     * @throws IllegalArgumentException se o cliente for nulo.
-     */
-    public void setCliente(Cliente cliente) {
-        if (cliente == null) {
-            throw new IllegalArgumentException("Cliente não pode ser nulo.");
-        }
-
-        this.cliente = cliente;
-    }
-
     public String getData() {
         return data;
-    }
-
-    /**
-     * Define a data do pedido.
-     * 
-     * @param data data que será associada ao pedido.
-     * @throws IllegalArgumentException se a data for nula ou estiver vazia.
-     */
-    public void setData(String data) {
-        if (!campoValido(data)) {
-            throw new IllegalArgumentException("Data não pode ser nula ou vazia.");
-        }
-
-        this.data = data;
     }
 
     public SituacaoPedido getSituacaoPedido() {
         return situacaoPedido;
     }
 
-    /**
-     * Define a situação atual do pedido.
-     * 
-     * @param situacaoPedido situação que será atribuída ao pedido.
-     * @throws IllegalArgumentException se a situação for nula.
-     */
-    public void setSituacaoPedido(SituacaoPedido situacaoPedido) {
-        if (situacaoPedido == null) {
-            throw new IllegalArgumentException("Situação de pedido não pode ser nula.");
-        }
-
-        this.situacaoPedido = situacaoPedido;
-    }
-
     public SituacaoPagamento getSituacaoPagamento() {
         return situacaoPagamento;
     }
 
-    /**
-     * Define a situação atual do pagamento.
-     * 
-     * @param situacaoPagamento situação que setá atribuida ao pagamento.
-     * @throws IllegalArgumentException se a situação for nula.
-     */
-    public void setSituacaoPagamento(SituacaoPagamento situacaoPagamento) {
-        if (situacaoPagamento == null) {
-            throw new IllegalArgumentException("Situação de pagamento não pode ser nula.");
-        }
+    public ProcessadorPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
 
-        this.situacaoPagamento = situacaoPagamento;
+    public String getComprovante() {
+        return comprovante;
     }
 
     public List<ItemPedido> getListaDeItens() {
         return Collections.unmodifiableList(listaDeItens);
-    }
-
-    public ProcessadorPagamento getFormaPagamento() {
-        return formaPagamento;
     }
 
     public void adicionarItem(Produto produto) throws EstoqueInsuficienteException {
@@ -176,10 +136,6 @@ public class Pedido {
         if (formaPagamento == null) {
             throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
         }
-    }
-
-    private boolean campoValido(String campo) {
-        return campo != null && !campo.isBlank();
     }
 
     @Override
