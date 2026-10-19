@@ -125,8 +125,12 @@ public class Produto {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser positiva.");
         }
+
+        if (!ativo) {
+            throw new IllegalStateException("Produto inativo " + nome);
+        }
       
-        if (quantidade > this.quantidadeEmEstoque) {
+        if (quantidade > quantidadeEmEstoque) {
             throw new EstoqueInsuficienteException(this, quantidade);
         }
       
