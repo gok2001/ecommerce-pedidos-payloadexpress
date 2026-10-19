@@ -160,7 +160,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", this.codigo, this.nome, this.preco, this.quantidadeEmEstoque, this.descricao);
+        return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", codigo, nome, preco, quantidadeEmEstoque, descricao);
     }
 
     @Override 
@@ -169,11 +169,9 @@ public class Produto {
             return true;
         }
 
-        if (!(o instanceof Produto)) {
+        if (!(o instanceof Produto produto)) {
             return false;
         }
-
-        Produto produto = (Produto) o;
 
         return this.codigo.equals(produto.codigo);
     }
