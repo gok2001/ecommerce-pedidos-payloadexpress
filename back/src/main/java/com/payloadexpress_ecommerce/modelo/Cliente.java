@@ -1,16 +1,16 @@
 package com.payloadexpress_ecommerce.modelo;
 
 // Classe responsável pelo cadastro de clientes
-//Herda dados da class Pessoa
+// Herda dados da class Pessoa
 public class Cliente extends Pessoa {
 
     private String email;
     private String telefone;
     private String endereco;
 
-    public Cliente(String nome, String CPF, String email, String telefone, String endereco) {
+    public Cliente(String nome, String cpf, String email, String telefone, String endereco) {
 
-        super(nome, CPF);
+        super(nome, cpf);
 
         setEmail(email);
         setTelefone(telefone);
@@ -22,10 +22,8 @@ public class Cliente extends Pessoa {
     }
 
     public void setEmail(String email) {
-        String regex = "[A-Za-z0-9+_.-]+@[A-Za-z0-9+.-]+\\.[A-Za-z]{2,}$";
-
-        if (email == null || !email.matches(regex)) {
-            throw new IllegalArgumentException("Formato de email inválido");
+        if (email == null || !email.trim().matches("[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
+            throw new IllegalArgumentException("Email inválido.");
         }
 
         this.email = email;
