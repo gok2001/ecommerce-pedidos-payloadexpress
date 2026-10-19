@@ -80,17 +80,23 @@ public class Pedido {
     }
 
     public void adicionarItem(Produto produto, int quantidade) throws EstoqueInsuficienteException {
-        if (this.situacaoPagamento == SituacaoPagamento.PAGO) {
-            throw new IllegalArgumentException("Não é possível adicionar itens ao pedido pago.");
+        validarEdicao();
+
+        if (produto == null) {
+            throw new IllegalArgumentException("Produto é obrigatório.");
         }
 
-        if (!produto.temEstoqueDisponivel(quantidade)) {
-            throw new EstoqueInsuficienteException(produto, quantidade);
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade deve ser positiva.");
+        }
+
+        if (!produto.isAtivo()) {
+            throw new IllegalStateException("Produto inativo: " + produto.getNome());
         }
 
         ItemPedido itemPedido = new ItemPedido(produto, quantidade, produto.getPreco());
-        listaDeItens.add(itemPedido);
         produto.baixarEstoque(quantidade);
+        listaDeItens.add(itemPedido);
     }
 
     public BigDecimal calcularValorTotal() {
