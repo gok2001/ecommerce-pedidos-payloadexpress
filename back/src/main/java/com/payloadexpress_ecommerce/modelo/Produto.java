@@ -45,7 +45,7 @@ public class Produto {
 
         validarTexto(nome, "Nome");
 
-        this.nome = nome;
+        this.nome = nome.trim();
     }
 
     public String getDescricao() {
