@@ -62,7 +62,7 @@ public class Produto {
 
         validarTexto(descricao, "Descrição");
 
-        this.descricao = descricao;
+        this.descricao = descricao.trim();
     }
 
     public BigDecimal getPreco() {
