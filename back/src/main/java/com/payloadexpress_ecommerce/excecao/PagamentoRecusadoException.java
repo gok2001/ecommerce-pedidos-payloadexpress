@@ -1,21 +1,13 @@
 package com.payloadexpress_ecommerce.excecao;
 
-import com.payloadexpress_ecommerce.modelo.ProcessadorPagamento;;
+import com.payloadexpress_ecommerce.modelo.ProcessadorPagamento;
 
 public class PagamentoRecusadoException extends ECommerceException {
-    
     private final String motivo;
 
-    public PagamentoRecusadoException(ProcessadorPagamento formaPagamento, String motivo) {
-        super("Pagamento por " + formaPagamento + " recusado: " + motivo);
-
+    public PagamentoRecusadoException(ProcessadorPagamento processador, String motivo) {
+        super("Pagamento via " + processador.getDescricao() + " não aprovado: " + motivo);
         this.motivo = motivo;
-    }
-
-    public PagamentoRecusadoException(ProcessadorPagamento formaPagamento) {
-        super("Pagamento por " + formaPagamento + " não foi aprovado");
-
-        this.motivo = "Motivo não informado";
     }
 
     public String getMotivo() {
