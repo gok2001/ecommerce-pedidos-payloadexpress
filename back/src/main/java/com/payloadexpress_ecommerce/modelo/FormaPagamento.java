@@ -3,38 +3,31 @@ package com.payloadexpress_ecommerce.modelo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public abstract class FormaPagamento {
+public abstract class FormaPagamento implements ProcessadorPagamento {
 
-    private BigDecimal valor;
-    private LocalDate dataDoPagamento;
+    private final BigDecimal valor;
+    private final LocalDate dataDoPagamento;
+    private String comprovante;
 
     public FormaPagamento(BigDecimal valor, LocalDate dataDoPagamento){
-        setValor(valor);
-        setDataDoPagamento(dataDoPagamento);
+        if (valor == null || valor.signum() <= 0) {
+            throw new IllegalArgumentException("Valor do pagamento deve ser positivo.");
+        }
+
+        if (dataDoPagamento == null || dataDoPagamento.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Data do pagamento não pode ser passada.");
+        }
+
+        this.valor = valor;
+        this.dataDoPagamento = dataDoPagamento;
     }
 
     public BigDecimal getValor(){
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
-        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Valor do pagamento deve ser positivo");
-        }
-
-        this.valor = valor;
-    }
-
     public LocalDate getDataDoPagamento() {
         return dataDoPagamento;
-    }
-
-    public void setDataDoPagamento(LocalDate dataDoPagamento) {
-        if (dataDoPagamento == null || dataDoPagamento.isBefore(LocalDate.now())) {
-             throw new IllegalArgumentException("A data do pagamento deve ser maior ou igual a data atual.");
-        }
-
-        this.dataDoPagamento = dataDoPagamento;
     }
 
     public abstract boolean processar();
