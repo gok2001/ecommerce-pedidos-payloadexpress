@@ -14,7 +14,7 @@ public abstract class Pessoa {
             throw new IllegalArgumentException("CPF deve ter 11 dígitos (com ou sem máscara).");
         }
 
-        this.documento = documento;
+        this.documento = documento.replaceAll("\\D", "");
     }
 
     public String getNome() {
