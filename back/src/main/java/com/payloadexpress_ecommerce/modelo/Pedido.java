@@ -109,39 +109,31 @@ public class Pedido {
         return total;
     }
     
-    public boolean pagar(ProcessadorPagamento formaPagamento) throws PedidoInvalidoException, PagamentoRecusadoException {
-        validarPedidoParaPagamento();
-        validarFormaPagamento(formaPagamento);
-
-        BigDecimal valorTotal = calcularValorTotal();
-
-        boolean processado = formaPagamento.processar(valorTotal);
-
-        if (processado) {
-            this.formaPagamento = formaPagamento;
-            setSituacaoPagamento(SituacaoPagamento.PAGO);
-            setSituacaoPedido(SituacaoPedido.PROCESSANDO);
-        } else {
-            throw new PagamentoRecusadoException(formaPagamento);
+    public boolean pagar(ProcessadorPagamento processador) throws PedidoInvalidoException, PagamentoRecusadoException {
+        if (processador == null) {
+            throw new IllegalArgumentException("Forma de pagamento é obrigatória.");
         }
 
-        return processado;
-    }
-
-    private void validarPedidoParaPagamento() throws PedidoInvalidoException {
         if (situacaoPagamento == SituacaoPagamento.PAGO || situacaoPedido != SituacaoPedido.PENDENTE) {
-            throw new PedidoInvalidoException("pedido já foi pago");
+            throw new PedidoInvalidoException("somente pedidos pendentes e não pagos podem ser pagos");
         }
 
         if (listaDeItens.isEmpty()) {
             throw new PedidoInvalidoException("pedido não possui itens");
         }
-    }
 
-    private void validarFormaPagamento(ProcessadorPagamento formaPagamento) {
-        if (formaPagamento == null) {
-            throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
+        BigDecimal total = calcularValorTotal();
+
+        if (!processador.processar(total)) {
+            throw new PagamentoRecusadoException(processador, "transação não aprovada (verifique limite ou compensação)");
         }
+
+        this.formaPagamento = processador;
+        this.comprovante = processador.getComprovante();
+        this.situacaoPagamento = SituacaoPagamento.PAGO;
+        this.situacaoPedido = SituacaoPedido.PROCESSANDO;
+
+        return true;
     }
 
     @Override
