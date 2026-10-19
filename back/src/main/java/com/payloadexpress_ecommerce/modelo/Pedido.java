@@ -140,6 +140,7 @@ public class Pedido {
         if (processado) {
             this.formaPagamento = formaPagamento;
             this.situacaoPagamento = SituacaoPagamento.PAGO;
+            this.situacaoPedido = SituacaoPedido.PROCESSANDO;
         } else {
             throw new PagamentoRecusadoException(formaPagamento);
         }
@@ -148,7 +149,7 @@ public class Pedido {
     }
 
     private void validarPedidoParaPagamento() throws PedidoInvalidoException {
-        if (situacaoPagamento == SituacaoPagamento.PAGO) {
+        if (situacaoPagamento == SituacaoPagamento.PAGO || situacaoPedido != SituacaoPedido.PENDENTE) {
             throw new PedidoInvalidoException("pedido já foi pago");
         }
 
