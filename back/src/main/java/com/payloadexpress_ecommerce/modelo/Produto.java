@@ -6,7 +6,7 @@ import com.payloadexpress_ecommerce.excecao.EstoqueInsuficienteException;
 
 public class Produto {
 
-    private String codigo;
+    private final String codigo;
     private String nome;
     private String descricao;
     private BigDecimal preco;
@@ -14,8 +14,11 @@ public class Produto {
     private boolean ativo;
 
     public Produto(String codigo, String nome, String descricao, BigDecimal preco, int quantidadeEmEstoque) {
-        this.codigo = codigo;
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("Código do produto é obrigatório.");
+        }
         
+        this.codigo = codigo;
         setNome(nome);
         setDescricao(descricao);
         setPreco(preco);
