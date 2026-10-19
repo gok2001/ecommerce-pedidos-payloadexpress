@@ -15,7 +15,7 @@ public class Pedido {
     private String numero;
     private Cliente cliente;
     private String data;
-    private SituacaoPedido situacaoPedido;
+    private SituacaoPedido situacaoPedido = SituacaoPedido.PENDENTE;
     private List<ItemPedido> listaDeItens = new ArrayList<>();
 
     private ProcessadorPagamento formaPagamento;
@@ -29,7 +29,6 @@ public class Pedido {
         this.numero = numero;
         setCliente(cliente);
         setData(data);
-        setSituacaoPedido(situacaoPedido);
     }
 
     public String getNumero() {
