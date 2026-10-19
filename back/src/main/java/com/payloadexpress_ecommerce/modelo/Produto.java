@@ -95,7 +95,7 @@ public class Produto {
      */
     public void setQuantidadeEmEstoque(int quantidadeEmEstoque) {
         if (quantidadeEmEstoque < 0) {
-            throw new IllegalArgumentException("Quantidade em estoque não pode ser negativa.");
+            throw new IllegalArgumentException("Estoque não pode ser negativo.");
         }
 
         this.quantidadeEmEstoque = quantidadeEmEstoque;
