@@ -46,7 +46,11 @@ public class Cliente extends Pessoa {
     }
 
     public void setEndereco(String endereco) {
-        this.endereco = endereco;
+        if (endereco == null || endereco.isBlank()) {
+            throw new IllegalArgumentException("Endereço é obrigatório.");
+        }
+        
+        this.endereco = endereco.trim();
     }
 
     @Override
@@ -57,8 +61,8 @@ public class Cliente extends Pessoa {
     public String retornaIdentificacaoCliente() {
         return "Nome: " + getNome()
                 + "\nCPF: " + getDocumento()
-                + "\nEmail: " + getEmail()
-                + "\nTelefone: " + getTelefone()
-                + "\nEndereço: " + getEndereco();
+                + "\nEmail: " + email
+                + "\nTelefone: " + telefone
+                + "\nEndereço: " + endereco;
     }
 }
