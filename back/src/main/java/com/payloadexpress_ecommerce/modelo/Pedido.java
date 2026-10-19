@@ -26,6 +26,7 @@ public class Pedido {
             throw new IllegalArgumentException("Número não pode ser nulo ou vazio.");
         }
 
+        this.numero = numero;
         setCliente(cliente);
         setData(data);
         setSituacaoPedido(situacaoPedido);
