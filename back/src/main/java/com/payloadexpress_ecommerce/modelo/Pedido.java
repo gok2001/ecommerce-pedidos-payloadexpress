@@ -164,6 +164,12 @@ public class Pedido {
         situacaoPedido = SituacaoPedido.CANCELADO;
     }
 
+    private void validarEdicao() {
+        if (situacaoPedido != SituacaoPedido.PENDENTE || situacaoPagamento != SituacaoPagamento.ABERTO) {
+            throw new IllegalStateException("Somente pedidos pendentes e não pagos aceitam itens.");
+        }
+    }
+
     @Override
     public String toString() {
         return String.format(
