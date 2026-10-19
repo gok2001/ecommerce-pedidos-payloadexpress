@@ -9,20 +9,22 @@ public class Funcionario extends Pessoa {
         
         super(nome, cpf);
         setMatricula(matricula);
-        // setCargo(cargo);
+        setCargo(cargo);
     }
 
     public void setMatricula(String matricula) {
         if (matricula == null || matricula.isBlank()){
-            throw new IllegalArgumentException("Matrícula é obrigatória");
+            throw new IllegalArgumentException("Matrícula é obrigatória.");
         }
+
         this.matricula = matricula;
     }
 
     public void setCargo(String cargo) {
         if (cargo == null || cargo.isBlank()){
-            throw new IllegalArgumentException("Cargo é obrigatória");
+            throw new IllegalArgumentException("Cargo é obrigatório.");
         }
+
         this.cargo = cargo;
     }
     @Override 
