@@ -34,7 +34,11 @@ public class Cliente extends Pessoa {
     }
 
     public void setTelefone(String telefone) {
-        this.telefone = telefone;
+        if (telefone == null || !telefone.replaceAll("\\D", "").matches("\\d{10,11}")) {
+            throw new IllegalArgumentException("Telefone deve conter DDD e 10 ou 11 dígitos.");
+        }
+
+        this.telefone = telefone.replaceAll("\\D", "");
     }
 
     public String getEndereco() {
