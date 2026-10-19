@@ -130,6 +130,7 @@ public class Pedido {
 
         ItemPedido itemPedido = new ItemPedido(produto, quantidade, produto.getPreco());
         listaDeItens.add(itemPedido);
+        produto.baixarEstoque(quantidade);
     }
 
     public BigDecimal calcularValorTotal() {
