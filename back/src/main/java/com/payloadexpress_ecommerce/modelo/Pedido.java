@@ -93,6 +93,12 @@ public class Pedido {
         return situacaoPagamento;
     }
 
+    /**
+     * Define a situação atual do pagamento.
+     * 
+     * @param situacaoPagamento situação que setá atribuida ao pagamento.
+     * @throws IllegalArgumentException se a situação for nula.
+     */
     public void setSituacaoPagamento(SituacaoPagamento situacaoPagamento) {
         if (situacaoPagamento == null) {
             throw new IllegalArgumentException("Situação de pagamento não pode ser nula.");
