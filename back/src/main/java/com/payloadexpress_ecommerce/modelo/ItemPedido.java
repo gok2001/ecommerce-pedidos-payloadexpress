@@ -38,12 +38,12 @@ public class ItemPedido {
         return precoPraticado;
     }
 
-    @Override
-    public String toString(){
-        return String.format("[%s] %s = R$%s", this.produto, this.quantidade, this.precoPraticado);
+    public BigDecimal calcularSubtotal(){
+        return precoPraticado.multiply(BigDecimal.valueOf(quantidade));
     }
 
-    public BigDecimal calcularSubtotal(){
-        return this.precoPraticado.multiply(BigDecimal.valueOf(this.quantidade));
+    @Override
+    public String toString(){
+        return String.format("[%s] %s x %d = R$ %s", produto.getCodigo(), produto.getNome(), quantidade, calcularSubtotal());
     }
 }
