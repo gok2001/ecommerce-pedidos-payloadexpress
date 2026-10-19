@@ -30,7 +30,7 @@ public class ItemPedido {
         return produto;
     }
 
-    public long getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 

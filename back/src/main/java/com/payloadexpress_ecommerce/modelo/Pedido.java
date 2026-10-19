@@ -115,7 +115,7 @@ public class Pedido {
         }
 
         if (situacaoPagamento == SituacaoPagamento.PAGO || situacaoPedido != SituacaoPedido.PENDENTE) {
-            throw new PedidoInvalidoException("somente pedidos pendentes e não pagos podem ser pagos");
+            throw new PedidoInvalidoException("somente pedidos pendentes e não pagos podem ser pagos.");
         }
 
         if (listaDeItens.isEmpty()) {
@@ -125,7 +125,7 @@ public class Pedido {
         BigDecimal total = calcularValorTotal();
 
         if (!processador.processar(total)) {
-            throw new PagamentoRecusadoException(processador, "transação não aprovada (verifique limite ou compensação)");
+            throw new PagamentoRecusadoException(processador, "transação não aprovada (verifique limite ou compensação).");
         }
 
         this.formaPagamento = processador;
@@ -150,6 +150,18 @@ public class Pedido {
         }
 
         situacaoPedido = SituacaoPedido.ENTREGUE;
+    }
+
+    public void cancelar() throws PedidoInvalidoException{
+        if (situacaoPedido != SituacaoPedido.PENDENTE || situacaoPagamento != SituacaoPagamento.ABERTO) {
+            throw new PedidoInvalidoException("somente pedidos pendentes e não pagos podem ser cancelados.");
+        }
+
+        for (ItemPedido item : listaDeItens) {
+            item.getProduto().reporEstoque(item.getQuantidade());
+        }
+
+        situacaoPedido = SituacaoPedido.CANCELADO;
     }
 
     @Override
