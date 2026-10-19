@@ -115,7 +115,7 @@ public class Produto {
 
     public boolean temEstoqueDisponivel(int quantidadeDesejada) {
         if (quantidadeDesejada <= 0) {
-            throw new IllegalArgumentException("Quantidade inválida.");
+            throw new IllegalArgumentException("Quantidade deve ser positiva.");
         }
 
         return ativo && quantidadeEmEstoque >= quantidadeDesejada;
