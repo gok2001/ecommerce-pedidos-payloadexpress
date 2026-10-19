@@ -34,32 +34,18 @@ public class Pix extends FormaPagamento {
     public String getChave() {
         return chave;
     }
+    public TipoChavePix getTipoDaChave() {
+        return tipoDaChave;
+    }
 
-    @Override 
-    public boolean processar(){
-        // simulação: um Pix é aprovado na hora
-        System.out.println("Processando Pix para a chave " + chave);
+    @Override
+    public boolean processar(BigDecimal valor) {
+        registrarComprovante("PIX");
         return true;
     }
 
     @Override
-    public String getResumo(){
-        return super.getResumo() + " (chave " + chave + ")";
-    }
-
-
-    //metodos da interface
-    @Override
-    public boolean processar(BigDecimal valor) {
-        System.out.println("Enviando cobrança Pix para a chave " + chave);
-        return true; // aprovação imediata
-    }
-    @Override
-    public String getComprovante() {
-        return "PIX-" + System.currentTimeMillis();
-    }
-    @Override
     public String getDescricao() {
-        return "Pix - chave " + chave;
+        return "Pix (" + tipoDaChave + ") - " + chave;
     }
 }
