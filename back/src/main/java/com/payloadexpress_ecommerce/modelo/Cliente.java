@@ -26,7 +26,7 @@ public class Cliente extends Pessoa {
             throw new IllegalArgumentException("Email inválido.");
         }
 
-        this.email = email;
+        this.email = email.trim();
     }
 
     public String getTelefone() {
