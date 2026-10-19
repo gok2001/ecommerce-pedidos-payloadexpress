@@ -46,6 +46,7 @@ public class CartaoCredito extends FormaPagamento {
     @Override
     public boolean processar() {
         if (limiteDisponivel.compareTo(getValor()) < 0) return false;
+
         registrarComprovante("CARTAO-" + bandeira);
         return true;
     }
