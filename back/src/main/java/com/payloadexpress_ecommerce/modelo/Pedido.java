@@ -140,7 +140,7 @@ public class Pedido {
         if (processado) {
             this.formaPagamento = formaPagamento;
             this.situacaoPagamento = SituacaoPagamento.PAGO;
-            this.situacaoPedido = SituacaoPedido.PROCESSANDO;
+            setSituacaoPedido(SituacaoPedido.PROCESSANDO);
         } else {
             throw new PagamentoRecusadoException(formaPagamento);
         }
