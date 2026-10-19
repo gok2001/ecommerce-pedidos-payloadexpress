@@ -135,7 +135,14 @@ public class Produto {
         }
       
         this.quantidadeEmEstoque -= quantidade;
+    }
 
+    public void reporEstoque(int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Reposição deve ser positiva.");
+        }
+
+        quantidadeEmEstoque = Math.addExact(quantidadeEmEstoque, quantidade);
     }
 
     /** 
