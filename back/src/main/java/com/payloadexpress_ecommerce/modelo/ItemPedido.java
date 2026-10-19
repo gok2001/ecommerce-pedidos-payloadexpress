@@ -20,9 +20,9 @@ public class ItemPedido {
 
     public void setProduto(Produto produto) {
         if (produto == null) {
-            throw new IllegalArgumentException("Produto não pode ser vazio: "+produto);
-            
+            throw new IllegalArgumentException("Produto não pode ser vazio: " + produto);
         }
+
         this.produto = produto;
     }
 
@@ -42,16 +42,17 @@ public class ItemPedido {
         return precoPraticado;
     }
 
-    public void setPrecoPraticado(BigDecimal precoPraticado) {
+    private void setPrecoPraticado(BigDecimal precoPraticado) {
         if (precoPraticado == null || precoPraticado.compareTo(BigDecimal.ZERO) < 0){
-            throw new IllegalArgumentException("Preço praticado não pode ser negativo: "+precoPraticado);
+            throw new IllegalArgumentException("Preço praticado não pode ser negativo: " + precoPraticado);
         }
+
         this.precoPraticado = precoPraticado;
     }
 
     @Override
     public String toString(){
-        return String.format("[%s] %s", this.produto, this.quantidade, this.precoPraticado);
+        return String.format("[%s] %s = R$%s", this.produto, this.quantidade, this.precoPraticado);
     }
 
     public BigDecimal calcularSubtotal(){
