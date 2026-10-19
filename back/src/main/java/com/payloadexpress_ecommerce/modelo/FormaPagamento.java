@@ -51,6 +51,11 @@ public abstract class FormaPagamento implements ProcessadorPagamento {
         }
     }
 
+    @Override 
+    public String getComprovante() {
+        return comprovante;
+    }
+
     public String getResumo() {
         return String.format("%s no valor de R$ %s",
                              getClass().getSimpleName(), valor);
