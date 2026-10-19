@@ -109,6 +109,10 @@ public class Produto {
         this.ativo = true;
     }
 
+    public void desativar() {
+        this.ativo = false;
+    }
+
     public boolean temEstoqueDisponivel(int quantidadeDesejada) {
         if (quantidadeDesejada <= 0) {
             throw new IllegalArgumentException("Quantidade inválida.");
