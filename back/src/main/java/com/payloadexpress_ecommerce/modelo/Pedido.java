@@ -136,6 +136,14 @@ public class Pedido {
         return true;
     }
 
+    public void marcarComoEnviado() throws PedidoInvalidoException{
+        if (situacaoPedido != SituacaoPedido.PROCESSANDO || situacaoPagamento != SituacaoPagamento.PAGO) {
+            throw new PedidoInvalidoException("pedido deve estar pago e PROCESSANDO para envio.")
+        }
+
+        situacaoPedido = SituacaoPedido.ENVIADO;
+    }
+
     @Override
     public String toString() {
         return String.format(
