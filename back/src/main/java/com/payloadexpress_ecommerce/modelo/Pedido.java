@@ -94,6 +94,14 @@ public class Pedido {
         return situacaoPagamento;
     }
 
+    public void setSituacaoPagamento(SituacaoPagamento situacaoPagamento) {
+        if (situacaoPagamento == null) {
+            throw new IllegalArgumentException("Situação de pagamento não pode ser nula.");
+        }
+
+        this.situacaoPagamento = situacaoPagamento;
+    }
+
     public List<ItemPedido> getListaDeItens() {
         return Collections.unmodifiableList(listaDeItens);
     }
