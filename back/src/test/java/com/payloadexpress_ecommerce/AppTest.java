@@ -1,4 +1,4 @@
-package com.payloadexpress-ecommerce;
+package com.payloadexpress_ecommerce;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

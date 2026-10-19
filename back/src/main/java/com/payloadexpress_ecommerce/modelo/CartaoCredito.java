@@ -3,83 +3,56 @@ package com.payloadexpress_ecommerce.modelo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class CartaoCredito extends FormaPagamento implements ProcessadorPagamento{
+public class CartaoCredito extends FormaPagamento {
 
-    //Atributos
-    private String numeroMascarado;
-    private String bandeira;
-    private int quantidadeDeParcelas;
+    private final String numeroMascarado;
+    private final String bandeira;
+    private final int quantidadeDeParcelas;
+    private final BigDecimal limiteDisponivel;
 
-    //Metodo construtor
-    public CartaoCredito(BigDecimal valor, LocalDate dataDoPagamento, String numeroMascarado, String bandeira, int quantidadeDeParcelas){
+    public CartaoCredito(
+        BigDecimal valor,
+        LocalDate dataDoPagamento,
+        String numeroMascarado,
+        String bandeira,
+        int quantidadeDeParcelas,
+        BigDecimal limiteDisponivel
+    ) {
+
         super(valor, dataDoPagamento);
-        setNumeroMascarado(numeroMascarado);
-        setBandeira(bandeira);
-        setQuantidadeDeParcelas(quantidadeDeParcelas);
-    }
 
-    //Metodos gets e setters
-    public String getNumeroMascarado() {
-        return numeroMascarado;
-    }
-
-    public void setNumeroMascarado(String numeroMascarado) {
-        if (numeroMascarado == null) {
-            throw new IllegalArgumentException("Numero mascarado não pode ser vazio"+numeroMascarado);
+        if (numeroMascarado == null || numeroMascarado.isBlank()) {
+            throw new IllegalArgumentException("Número mascarado é obrigatório.");
         }
 
-        this.numeroMascarado = numeroMascarado;
-    }
-
-    public String getBandeira() {
-        return bandeira;
-    }
-
-    public void setBandeira(String bandeira) {
-        if (bandeira == null) {
-            throw new IllegalArgumentException("Bandeira não pode ser vazio"+bandeira);
+        if (bandeira == null || bandeira.isBlank()) {
+            throw new IllegalArgumentException("Bandeira é obrigatória.");
         }
-        this.bandeira = bandeira;
-    }
 
-    public int getQuantidadeDeParcelas() {
-        return quantidadeDeParcelas;
-    }
-
-    public void setQuantidadeDeParcelas(int quantidadeDeParcelas) {
-        if (quantidadeDeParcelas < 0 || quantidadeDeParcelas > 12){
-            throw new IllegalArgumentException("Quantidade de parcelas invalida: "+quantidadeDeParcelas);
+        if (quantidadeDeParcelas < 1 || quantidadeDeParcelas > 12) {
+            throw new IllegalArgumentException("Quantidade de parcelas deve ser de 1 a 12.");
         }
+
+        if (limiteDisponivel == null || limiteDisponivel.signum() < 0) {
+            throw new IllegalArgumentException("Limite disponível deve ser não negativo.");
+        }
+
+        this.numeroMascarado = numeroMascarado.trim();
+        this.bandeira = bandeira.trim();
         this.quantidadeDeParcelas = quantidadeDeParcelas;
+        this.limiteDisponivel = limiteDisponivel;
     }
 
-    //Metodo exibir resumo
     @Override
-    public String getResumo(){
-        return super.getResumo() + " (Cartão de Crédito " + numeroMascarado + ", "+bandeira+")";
-    }
+    public boolean processar() {
+        if (limiteDisponivel.compareTo(getValor()) < 0) return false;
 
-
-    @Override 
-    public boolean processar(){
-        // simulação: um Cartão de Crédito é aprovado na hora
-        System.out.println("Processando Cartão de Crédito para o pagamento");
+        registrarComprovante("CARTAO-" + bandeira);
         return true;
     }
 
-
-    //metodos da interface
-    @Override
-    public boolean processar(BigDecimal valor) {
-        System.out.println("Enviando cobrança em Cartão de Crédito com o numero mascarado: " + numeroMascarado + (quantidadeDeParcelas == 0?".":".\nQuantidade de parcelas: "+quantidadeDeParcelas));
-        return true; // aprovação imediata
-    }
-    @Override
-    public String getComprovante() {
-        return "Cartão de Crédito-" + System.currentTimeMillis();
-    }
     @Override
     public String getDescricao() {
-        return "Cartão de Crédito - numero mascarado " + numeroMascarado;
+        return "Cartão " + bandeira + " " + numeroMascarado + " em " + quantidadeDeParcelas + "x";
     }
 }
