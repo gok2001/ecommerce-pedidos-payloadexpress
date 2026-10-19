@@ -3,28 +3,36 @@ package com.payloadexpress_ecommerce.modelo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Pix extends FormaPagamento implements ProcessadorPagamento{
+public class Pix extends FormaPagamento {
 
-    //Atributo
-    private String chave;
+    private final String chave;
+    private final TipoChavePix tipoDaChave;
 
-    //Metodo construtor
-    public Pix(BigDecimal valor, LocalDate dataDoPagamento, String chave){
+    public Pix(BigDecimal valor, LocalDate dataDoPagamento, TipoChavePix tipoDaChave){
         super(valor, dataDoPagamento);
-        setChave(chave);
+        
+        if (tipoDaChave == null || chave == null || chave.isBlank()) {
+            throw new IllegalArgumentException("Tipo e chave são obrigatórios.");
+        }
+
+        boolean valida = switch (tipoDaChave) {
+            case CPF -> chave.matches("\\d{11}");
+            case EMAIL -> chave.matches("[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}");
+            case TELEFONE -> chave.matches("\\d{10,11}");
+            case ALEATORIA -> chave.matches("(?i)[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}");
+        }
+
+        if (!valida) {
+            throw new IllegalArgumentException("Chave Pix incompatível com o tipo " + tipoDaChave);
+        }
+
+        this.chave = chave;
+        this.tipoDaChave = tipoDaChave;
     }
 
     //Metodos gets e setters
     public String getChave() {
         return chave;
-    }
-
-    public void setChave(String chave) {
-        if (chave == null || chave.isBlank()) {
-            throw new IllegalArgumentException("Chave Pix é obrigatória");
-        }
-
-        this.chave = chave;
     }
 
     @Override 
