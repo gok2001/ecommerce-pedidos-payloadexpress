@@ -1,148 +1,85 @@
 package com.payloadexpress_ecommerce.util;
 
+import java.time.Year;
 import java.util.Random;
 
-/**
- * Cálculos e formatações de apoio ao módulo de pedidos.
- * Classe utilitária: todos os métodos são estáticos.
- */
-public class PedidoUtils {
+public final class PedidoUtils {
 
     private static final double VALOR_POR_QUILO = 7.50;
     private static final double FRETE_MINIMO = 15.00;
     private static final double TAXA_DESCONTO = 0.10;
     private static final double DESCONTO_MAXIMO = 50.00;
     private static final double VALOR_FRETE_GRATIS = 300.00;
+    private static final Random SORTEIO = new Random();
 
     private PedidoUtils() {
-        // Classe utilitária não deve ser instanciada.
+
     }
 
-    private static String gerarNumeroDoPedido() {
-        Random sorteio = new Random();
-        int sequencial = sorteio.nextInt(100000);
-
-        return String.format("PED-2026-%05d", sequencial);
+    public static String gerarNumeroDoPedido() {
+        return String.format("PED-%d-%05d", Year.now().getValue(), SORTEIO.nextInt(100000));
     }
 
-    private static double calcularSubtotal(double[] precos, int[] quantidades) {
+    public static double calcularSubtotal(double[] precos, int[] quantidades) {
+        if (precos == null || quantidades == null || precos.length == 0 || precos.length != quantidades.length) {
+            throw new IllegalArgumentException("Listas de preços/quantidades inválidas.");
+        }
 
-        double somaPrecos = 0;
+        double subtotal = 0;
 
         for (int i = 0; i < precos.length; i++) {
-            somaPrecos += precos[i] * quantidades[i];
+            if (!Double.isFinite(precos[i]) || precos[i] < 0 || quantidades[i] <= 0) {
+                throw new IllegalArgumentException("Preço ou quantidade inválida no item " + i);
+            }
+
+            subtotal += precos[i] * quantidades[i];
         }
 
-        return somaPrecos;
+        return subtotal;
     }
 
-
-    // Inicio Att. Joao_Arabia
-    public static void calcularFrete() {
-
-        double pesoEmQuilos = 8.1;
-
-        double quilosCobrados = Math.ceil(pesoEmQuilos);
-
-        double freteCalculado = quilosCobrados * VALOR_POR_QUILO;
-
-        double freteFinal = Math.max(freteCalculado, FRETE_MINIMO);
-
-        System.out.println("Peso: " + pesoEmQuilos + "kg");
-
-        System.out.printf("Frete: R$ %.2f%n", freteFinal);
-
-        double descontoFinal = calcularDesconto(freteFinal);
-
-        System.out.printf("Desconto Final: %.2f%n", descontoFinal);
-
-        String numeroPedido = gerarNumeroDoPedido();
-
-        System.out.printf("Pedido: %20s%n", numeroPedido);
-
-        
-        String[] produtos = {
-            "FuRaDeIra",
-            "SeRRaEleTrica"
-        };
-
-        double[] precos = {
-            378.83,
-            123.67
-        };
-
-        int[] quantidades = {
-            3,
-            7
-        };
-
-        for (int i = 0; i < produtos.length; i++) {
-            produtos[i] = normalizarNome(produtos[i]);
+    public static double calcularFrete(double pesoEmQuilos, double subtotal) {
+        if (!Double.isFinite(pesoEmQuilos) || pesoEmQuilos <= 0 || !Double.isFinite(subtotal) || subtotal < 0) {
+            throw new IllegalArgumentException("Peso e subtotal devem ser válidos.");
         }
 
-        System.out.println();
-        System.out.println(montarRecibo(produtos, precos, quantidades));
+        if (subtotal >= VALOR_FRETE_GRATIS) return 0;
 
+        return Math.max(Math.ceil(pesoEmQuilos) * VALOR_POR_QUILO, FRETE_MINIMO);
     }
 
-    private static double calcularDesconto(double valorDoPedido) {
-
-        double desconto = valorDoPedido * TAXA_DESCONTO;
-
-        return Math.min(desconto, DESCONTO_MAXIMO);
-    }
-
-    private static String normalizarNome(String nomeDigitado) {
-
-        if (nomeDigitado == null || nomeDigitado.isBlank()) {
-            return "NAO INFORMADO";
+    public static double calcularDesconto(double subtotal) {
+        if (!Double.isFinite(subtotal) || subtotal < 0) {
+            throw new IllegalArgumentException("Subtotal deve ser válido e não negativo.");
         }
 
-        return nomeDigitado.trim().toUpperCase();
+        return Math.min(subtotal * TAXA_DESCONTO, DESCONTO_MAXIMO);
     }
 
-    private static String montarRecibo( // cria o modelo do recibo
-            String[] produtos,
-            double[] precos,
-            int[] quantidades) {
+    public static String normalizarNome(String nome) {
+        return nome == null || nome.isBlank() ? "NAO INFORMADO" : nome.trim().toUpperCase();
+    }
 
-        StringBuilder recibo = new StringBuilder();
-
-        recibo.append("=== RECIBO DO PEDIDO ===")
-              .append(System.lineSeparator());
-
-        recibo.append(String.format(
-                "%-20s R$ %8s | %3s",
-                "PRODUTO",
-                "PRECO",
-                "QTD"))
-              .append(System.lineSeparator());
-
-        recibo.append("-----------------------------------------------")
-              .append(System.lineSeparator());
-
-        for (int i = 0; i < produtos.length; i++) {
-
-            recibo.append(String.format(
-                    "%-20s R$ %8.2f | %3d",
-                    produtos[i],
-                    precos[i],
-                    quantidades[i]))
-                  .append(System.lineSeparator());
+    public static String formatarLinhaDoRecibo(String nome, double preco, int quantidade) {
+        if (nome == null || nome.isBlank() || !Double.isFinite(preco) || preco < 0 || quantidade <= 0) {
+            throw new IllegalArgumentException("Item inválido para recibo.");
         }
 
-        return recibo.toString();
+        return String.format("%-20s R$ %8.2f x%3d", nome, preco, quantidade);
     }
-    
 
+    public static String montarRecibo(String[] nomes, double[] precos, int[] quantidades) {
+        if (nomes == null || precos == null || quantidades == null
+                || nomes.length == 0 || nomes.length != precos.length || nomes.length != quantidades.length) {
+            throw new IllegalArgumentException("Dados do recibo inválidos.");
+        }
 
-/*    private static double calcularFrete(double pesoEmQuilos, double subtotal) {
-        double quilosCobrados = Math.ceil(pesoEmQuilos);
-        double freteCalculado = quilosCobrados * VALOR_POR_QUILO;
-        double freteFinal = Math.max(freteCalculado, FRETE_MINIMO);
+        StringBuilder sb = new StringBuilder("=== RECIBO ===").append(System.lineSeparator());
 
-        return freteFinal;
+        for (int i = 0; i < nomes.length; i++) {
+            sb.append(formatarLinhaDoRecibo(nomes[i], precos[i], quantidades[i])).append(System.lineSeparator());
+        }
+
+        return sb.toString();
     }
-     */
 }
-

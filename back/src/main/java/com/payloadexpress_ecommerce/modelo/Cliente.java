@@ -1,16 +1,16 @@
 package com.payloadexpress_ecommerce.modelo;
 
 // Classe responsável pelo cadastro de clientes
-//Herda dados da class Pessoa
+// Herda dados da class Pessoa
 public class Cliente extends Pessoa {
 
     private String email;
     private String telefone;
     private String endereco;
 
-    public Cliente(String nome, String CPF, String email, String telefone, String endereco) {
+    public Cliente(String nome, String cpf, String email, String telefone, String endereco) {
 
-        super(nome, CPF);
+        super(nome, cpf);
 
         setEmail(email);
         setTelefone(telefone);
@@ -22,7 +22,11 @@ public class Cliente extends Pessoa {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email == null || !email.trim().matches("[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
+            throw new IllegalArgumentException("Email inválido.");
+        }
+
+        this.email = email.trim();
     }
 
     public String getTelefone() {
@@ -30,7 +34,11 @@ public class Cliente extends Pessoa {
     }
 
     public void setTelefone(String telefone) {
-        this.telefone = telefone;
+        if (telefone == null || !telefone.replaceAll("\\D", "").matches("\\d{10,11}")) {
+            throw new IllegalArgumentException("Telefone deve conter DDD e 10 ou 11 dígitos.");
+        }
+
+        this.telefone = telefone.replaceAll("\\D", "");
     }
 
     public String getEndereco() {
@@ -38,7 +46,11 @@ public class Cliente extends Pessoa {
     }
 
     public void setEndereco(String endereco) {
-        this.endereco = endereco;
+        if (endereco == null || endereco.isBlank()) {
+            throw new IllegalArgumentException("Endereço é obrigatório.");
+        }
+        
+        this.endereco = endereco.trim();
     }
 
     @Override
@@ -49,8 +61,8 @@ public class Cliente extends Pessoa {
     public String retornaIdentificacaoCliente() {
         return "Nome: " + getNome()
                 + "\nCPF: " + getDocumento()
-                + "\nEmail: " + getEmail()
-                + "\nTelefone: " + getTelefone()
-                + "\nEndereço: " + getEndereco();
+                + "\nEmail: " + email
+                + "\nTelefone: " + telefone
+                + "\nEndereço: " + endereco;
     }
 }

@@ -1,27 +1,46 @@
 package com.payloadexpress_ecommerce.modelo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import com.payloadexpress_ecommerce.excecao.EstoqueInsuficienteException;
+import com.payloadexpress_ecommerce.excecao.PagamentoRecusadoException;
+import com.payloadexpress_ecommerce.excecao.PedidoInvalidoException;
 
 // Classe responsável pela criação de pedidos
 public class Pedido {
 
-    private String numero;
-    private Cliente cliente;
-    private String data;
-    private SituacaoPedido situacao;
-    private List<ItemPedido> listaDeItens = new ArrayList<>();
-
+    private final String numero;
+    private final Cliente cliente;
+    private final String data;
+    private final List<ItemPedido> listaDeItens = new ArrayList<>();
+    private SituacaoPedido situacaoPedido = SituacaoPedido.PENDENTE;
     private ProcessadorPagamento formaPagamento;
+    private SituacaoPagamento situacaoPagamento = SituacaoPagamento.ABERTO;
+    private String comprovante;
 
-    public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacao) {
-        this.numero = numero;
+    public Pedido(String numero, Cliente cliente, String data, SituacaoPedido situacaoPedido) {
+        if (numero == null || numero.isBlank()) {
+            throw new IllegalArgumentException("Número do pedido é obrigatório.");
+        }
 
-        setCliente(cliente);
-        setData(data);
-        setSituacao(situacao);
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente é obrigatório.");
+        }
+
+        if (data == null || data.isBlank()) {
+            throw new IllegalArgumentException("Data é obrigatória.");
+        }
+
+        if (situacaoPedido != SituacaoPedido.PENDENTE) {
+            throw new IllegalArgumentException("Novo pedido deve começar PENDENTE.");
+        }
+
+        this.numero = numero.trim();
+        this.cliente = cliente;
+        this.data = data.trim();
     }
 
     public String getNumero() {
@@ -32,74 +51,51 @@ public class Pedido {
         return cliente;
     }
 
-    /**
-     * Define o cliente associado ao pedido.
-     * 
-     * @param cliente cliente que será associado ao pedido.
-     * @throws IllegalArgumentException se o cliente for nulo.
-     */
-    public void setCliente(Cliente cliente) {
-        if (cliente == null) {
-            throw new IllegalArgumentException("Cliente não pode ser nulo.");
-        }
-
-        this.cliente = cliente;
-    }
-
     public String getData() {
         return data;
     }
 
-    /**
-     * Define a data do pedido.
-     * 
-     * @param data data que será associada ao pedido.
-     * @throws IllegalArgumentException se a data for nula ou estiver vazia.
-     */
-    public void setData(String data) {
-        if (!campoValido(data)) {
-            throw new IllegalArgumentException("Data não pode ser nula ou vazia.");
-        }
-
-        this.data = data;
+    public SituacaoPedido getSituacaoPedido() {
+        return situacaoPedido;
     }
 
-    public SituacaoPedido getSituacao() {
-        return situacao;
-    }
-
-    /**
-     * Define a situação atual do pedido.
-     * 
-     * @param situacao situação que será atribuída ao pedido.
-     * @throws IllegalArgumentException se a situação for nula.
-     */
-    public void setSituacao(SituacaoPedido situacao) {
-        if (situacao == null) {
-            throw new IllegalArgumentException("Situação não pode ser nula.");
-        }
-
-        this.situacao = situacao;
-    }
-
-    private boolean campoValido(String campo) {
-        return campo != null && !campo.isBlank();
-    }
-
-    public List<ItemPedido> getListaDeItens() {
-        return Collections.unmodifiableList(listaDeItens);
+    public SituacaoPagamento getSituacaoPagamento() {
+        return situacaoPagamento;
     }
 
     public ProcessadorPagamento getFormaPagamento() {
         return formaPagamento;
     }
 
-    public void adicionarItem(Produto produto) {
+    public String getComprovante() {
+        return comprovante;
+    }
+
+    public List<ItemPedido> getListaDeItens() {
+        return Collections.unmodifiableList(listaDeItens);
+    }
+
+    public void adicionarItem(Produto produto) throws EstoqueInsuficienteException {
         adicionarItem(produto, 1);
     }
 
-    public void adicionarItem(Produto produto, long quantidade) {
+    public void adicionarItem(Produto produto, int quantidade) throws EstoqueInsuficienteException {
+        validarEdicao();
+
+        if (produto == null) {
+            throw new IllegalArgumentException("Produto é obrigatório.");
+        }
+
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade deve ser positiva.");
+        }
+
+        if (!produto.isAtivo()) {
+            throw new IllegalStateException("Produto inativo: " + produto.getNome());
+        }
+
         ItemPedido itemPedido = new ItemPedido(produto, quantidade, produto.getPreco());
+        produto.baixarEstoque(quantidade);
         listaDeItens.add(itemPedido);
     }
 
@@ -113,63 +109,76 @@ public class Pedido {
         return total;
     }
     
-    public boolean pagar(ProcessadorPagamento formaPagamento) {
-        validarPedidoParaPagamento();
-        validarFormaPagamento(formaPagamento);
-
-        BigDecimal valorTotal = calcularValorTotal();
-
-        boolean processado = formaPagamento.processar(valorTotal);
-
-        if (processado) {
-            this.formaPagamento = formaPagamento;
+    public boolean pagar(ProcessadorPagamento processador) throws PedidoInvalidoException, PagamentoRecusadoException {
+        if (processador == null) {
+            throw new IllegalArgumentException("Forma de pagamento é obrigatória.");
         }
 
-        return processado;
-    }
-
-    public boolean tentarFormasDePagamento(List<ProcessadorPagamento> formasPagamento) {
-        validarPedidoParaPagamento();
-
-        if (formasPagamento == null || formasPagamento.isEmpty()) {
-            throw new IllegalArgumentException("A lista de formas de pagamento não pode ser nula ou vazia.");
+        if (situacaoPagamento == SituacaoPagamento.PAGO || situacaoPedido != SituacaoPedido.PENDENTE) {
+            throw new PedidoInvalidoException("somente pedidos pendentes e não pagos podem ser pagos.");
         }
 
-        BigDecimal valorTotal = calcularValorTotal();
-
-        for (ProcessadorPagamento formaPagamento : formasPagamento) {
-            validarFormaPagamento(formaPagamento);
-
-            if (formaPagamento.processar(valorTotal)) {
-                this.formaPagamento = formaPagamento;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void validarPedidoParaPagamento() {
         if (listaDeItens.isEmpty()) {
-            throw new IllegalStateException("Pedido não pode ser pago sem itens.");
+            throw new PedidoInvalidoException("pedido não possui itens");
         }
+
+        BigDecimal total = calcularValorTotal();
+
+        if (!processador.processar(total)) {
+            throw new PagamentoRecusadoException(processador, "transação não aprovada (verifique limite ou compensação).");
+        }
+
+        this.formaPagamento = processador;
+        this.comprovante = processador.getComprovante();
+        this.situacaoPagamento = SituacaoPagamento.PAGO;
+        this.situacaoPedido = SituacaoPedido.PROCESSANDO;
+
+        return true;
     }
 
-    private void validarFormaPagamento(ProcessadorPagamento formaPagamento) {
-        if (formaPagamento == null) {
-            throw new IllegalArgumentException("Forma de pagamento não pode ser nula.");
+    public void marcarComoEnviado() throws PedidoInvalidoException{
+        if (situacaoPedido != SituacaoPedido.PROCESSANDO || situacaoPagamento != SituacaoPagamento.PAGO) {
+            throw new PedidoInvalidoException("pedido deve estar pago e PROCESSANDO para envio.");
+        }
+
+        situacaoPedido = SituacaoPedido.ENVIADO;
+    }
+
+    public void marcarComoEntregue() throws PedidoInvalidoException {
+        if (situacaoPedido != SituacaoPedido.ENVIADO) {
+            throw new PedidoInvalidoException("pedido deve estar ENVIADO para entrega.");
+        }
+
+        situacaoPedido = SituacaoPedido.ENTREGUE;
+    }
+
+    public void cancelar() throws PedidoInvalidoException{
+        if (situacaoPedido != SituacaoPedido.PENDENTE || situacaoPagamento != SituacaoPagamento.ABERTO) {
+            throw new PedidoInvalidoException("somente pedidos pendentes e não pagos podem ser cancelados.");
+        }
+
+        for (ItemPedido item : listaDeItens) {
+            item.getProduto().reporEstoque(item.getQuantidade());
+        }
+
+        situacaoPedido = SituacaoPedido.CANCELADO;
+    }
+
+    private void validarEdicao() {
+        if (situacaoPedido != SituacaoPedido.PENDENTE || situacaoPagamento != SituacaoPagamento.ABERTO) {
+            throw new IllegalStateException("Somente pedidos pendentes e não pagos aceitam itens.");
         }
     }
 
     @Override
     public String toString() {
         return String.format(
-            "Pedido{numero='%s', cliente=%s, data='%s', situacao='%s', listaDeItens=%s, valorTotal=%s}",
+            "Pedido %s | Cliente: %s | Data: %s | Situação: %s | Pagamento: %s | Total: R$ %s",
             numero,
-            cliente,
+            cliente.getNome(),
             data,
-            situacao,
-            listaDeItens,
+            situacaoPedido,
+            situacaoPagamento,
             calcularValorTotal()
         );
     }

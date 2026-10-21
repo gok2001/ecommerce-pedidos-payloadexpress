@@ -5,11 +5,16 @@ package com.payloadexpress_ecommerce.modelo;
 public abstract class Pessoa {
 
     private String nome;
-    private String documento;
+    private final String documento;
 
     public Pessoa(String nome, String documento) {
         setNome(nome);
-        setDocumento(documento);
+
+        if (documento == null || !documento.matches("(?:\\d{11}|\\d{3}.\\d{3}.\\d{3}-\\d{2})")) {
+            throw new IllegalArgumentException("CPF deve ter 11 dígitos (com ou sem máscara).");
+        }
+
+        this.documento = documento.replaceAll("\\D", "");
     }
 
     public String getNome() {
@@ -26,14 +31,6 @@ public abstract class Pessoa {
 
     public String getDocumento() {
         return documento;
-    }
-
-    public void setDocumento(String documento) {
-        if (documento == null || documento.isBlank()) {
-            throw new IllegalArgumentException("Documento é obrigatório");
-        }
-
-        this.documento = documento.trim();
     }
 
     public abstract String getIdentificacao();

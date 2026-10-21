@@ -6,7 +6,7 @@ import com.payloadexpress_ecommerce.excecao.EstoqueInsuficienteException;
 
 public class Produto {
 
-    private String codigo;
+    private final String codigo;
     private String nome;
     private String descricao;
     private BigDecimal preco;
@@ -14,8 +14,11 @@ public class Produto {
     private boolean ativo;
 
     public Produto(String codigo, String nome, String descricao, BigDecimal preco, int quantidadeEmEstoque) {
-        this.codigo = codigo;
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("Código do produto é obrigatório.");
+        }
         
+        this.codigo = codigo;
         setNome(nome);
         setDescricao(descricao);
         setPreco(preco);
@@ -42,7 +45,7 @@ public class Produto {
 
         validarTexto(nome, "Nome");
 
-        this.nome = nome;
+        this.nome = nome.trim();
     }
 
     public String getDescricao() {
@@ -59,7 +62,7 @@ public class Produto {
 
         validarTexto(descricao, "Descrição");
 
-        this.descricao = descricao;
+        this.descricao = descricao.trim();
     }
 
     public BigDecimal getPreco() {
@@ -73,8 +76,8 @@ public class Produto {
      * @throws IllegalArgumentException se o preço for nulo ou negativo
      */
     public void setPreco(BigDecimal preco) {
-        if (preco == null || preco.signum() == -1 ) {
-            throw new IllegalArgumentException("Preço não pode ser nulo ou negativo.");
+        if (preco == null || preco.signum() <= 0 ) {
+            throw new IllegalArgumentException("Preço deve ser maior que zero.");
         }
 
         this.preco = preco;
@@ -92,7 +95,7 @@ public class Produto {
      */
     public void setQuantidadeEmEstoque(int quantidadeEmEstoque) {
         if (quantidadeEmEstoque < 0) {
-            throw new IllegalArgumentException("Quantidade em estoque não pode ser negativa.");
+            throw new IllegalArgumentException("Estoque não pode ser negativo.");
         }
 
         this.quantidadeEmEstoque = quantidadeEmEstoque;
@@ -102,9 +105,17 @@ public class Produto {
         return ativo;
     }
 
+    public void ativar() {
+        this.ativo = true;
+    }
+
+    public void desativar() {
+        this.ativo = false;
+    }
+
     public boolean temEstoqueDisponivel(int quantidadeDesejada) {
         if (quantidadeDesejada <= 0) {
-            throw new IllegalArgumentException("Quantidade inválida.");
+            throw new IllegalArgumentException("Quantidade deve ser positiva.");
         }
 
         return ativo && quantidadeEmEstoque >= quantidadeDesejada;
@@ -114,14 +125,24 @@ public class Produto {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser positiva.");
         }
+
+        if (!ativo) {
+            throw new IllegalStateException("Produto inativo " + nome);
+        }
       
-        if (quantidade > this.quantidadeEmEstoque) {
+        if (quantidade > quantidadeEmEstoque) {
             throw new EstoqueInsuficienteException(this, quantidade);
         }
       
         this.quantidadeEmEstoque -= quantidade;
-        System.out.println("Baixa no estoque com sucesso");
+    }
 
+    public void reporEstoque(int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Reposição deve ser positiva.");
+        }
+
+        quantidadeEmEstoque = Math.addExact(quantidadeEmEstoque, quantidade);
     }
 
     /** 
@@ -139,7 +160,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", this.codigo, this.nome, this.preco, this.quantidadeEmEstoque, this.descricao);
+        return String.format("[%s] %s - R$ %.2f (%d em estoque) - %s", codigo, nome, preco, quantidadeEmEstoque, descricao);
     }
 
     @Override 
@@ -148,11 +169,9 @@ public class Produto {
             return true;
         }
 
-        if (!(o instanceof Produto)) {
+        if (!(o instanceof Produto produto)) {
             return false;
         }
-
-        Produto produto = (Produto) o;
 
         return this.codigo.equals(produto.codigo);
     }

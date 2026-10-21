@@ -39,20 +39,17 @@ clientes, pedidos e processamento de pagamentos._
 
 ```
 ecommerce-pedidos-payloadexpress/
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── com/senai/ecommerce/
-│   │           ├── modelo/
-│   │           ├── servico/
-│   │           ├── repositorio/
-│   │           └── util/
-│   └── test/
-│       └── java/
-│           └── com/senai/ecommerce/
-├── pom.xml
-├── README.md
-└── .gitignore
+├── back/
+│   ├── pom.xml
+│   └── src/
+│       ├── main/java/com/payloadexpress_ecommerce/
+│       │   ├── modelo/
+│       │   ├── excecao/
+│       │   ├── util/
+│       │   └── App.java
+│       └── test/java/com/payloadexpress_ecommerce/AppTest.java
+├── front/
+└── README.md
 ```
 
 ## Como rodar o projeto
