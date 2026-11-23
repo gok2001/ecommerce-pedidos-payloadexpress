@@ -1,5 +1,16 @@
 {
-  "produtos": [],
+  "produtos": [
+    {
+      "codigo": "PROD001",
+      "nome": "Mouse",
+      "descricao": "Mouse gamer RGB 4000 Dpi",
+      "preco": 800,
+      "quantidadeEmEstoque": 75,
+      "ativo": true,
+      "id": "YqPMkY5_3Og"
+    }
+  ],
   "clientes": [],
-  "pedidos": []
+  "pedidos": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }
