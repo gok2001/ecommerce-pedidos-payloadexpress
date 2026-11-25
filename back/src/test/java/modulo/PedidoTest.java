@@ -17,6 +17,7 @@ import com.payloadexpress_ecommerce.modelo.Produto;
 import com.payloadexpress_ecommerce.modelo.SituacaoPedido;
 
 public class PedidoTest {
+
     private Cliente cliente;
     private Produto notebook;
     private Pedido pedido;
@@ -25,7 +26,7 @@ public class PedidoTest {
     void prepararCenario() {
         cliente = new Cliente("Ana", "12345678901","ana@email.com", "9999999999", "Rua Abu 123");
         notebook = new Produto("1" ,"Notebook", "Leve e potente",new BigDecimal("3000.00"), 5);
-        pedido = new Pedido("1",cliente,"20-09-26", SituacaoPedido.PENDENTE);
+        pedido = new Pedido("1", cliente,"2026-09-20", SituacaoPedido.PENDENTE);
     }
 
     @Test
@@ -55,4 +56,21 @@ public class PedidoTest {
         assertEquals(5, notebook.getQuantidadeEmEstoque()); // não mexeu no estoque
     }
 
+    @Test 
+    void deveRejeitarDataPedidoInvalida() {
+        IllegalArgumentException erro = assertThrows(
+            IllegalArgumentException.class,
+            () -> new Pedido("2", cliente, "2026-02-30", SituacaoPedido.PENDENTE)
+        );
+
+        assertTrue(erro.getMessage().contains("Use o formato AAAA-MM-DD"));
+        assertTrue(erro.getCause() instanceof java.time.format.DateTimeParseException);
+    }
+
+    @Test 
+    void deveAceitarDataDePedidoValida() {
+        Pedido pedidoComDataValida = new Pedido("2", cliente, "2026-09-20", SituacaoPedido.PENDENTE);
+
+        assertEquals("2026-09-20", pedidoComDataValida.getData());
+    }
 }
