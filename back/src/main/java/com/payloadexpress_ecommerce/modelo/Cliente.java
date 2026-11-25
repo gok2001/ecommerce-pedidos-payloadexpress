@@ -23,7 +23,7 @@ public class Cliente extends Pessoa {
 
     public void setEmail(String email) {
         if (email == null || !email.trim().matches("[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
-            throw new IllegalArgumentException("Email inválido.");
+            throw new IllegalArgumentException("Email inválido. Informe um endereço no formato nome@dominio.com");
         }
 
         this.email = email.trim();
