@@ -1,0 +1,41 @@
+.resource-page { display:flex;flex-direction:column;gap:20px; }
+.resource-title-line { display:flex;align-items:center;gap:12px; }
+.resource-title-icon { display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(245,197,24,.35);border-radius:13px;color:var(--yellow);background:rgba(245,197,24,.09); }
+.resource-stats { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px; }
+.mini-stat { position:relative;display:flex;flex-direction:column;gap:9px;padding:18px 20px;min-height:105px; }
+.mini-stat>span:first-child { color:#aeb8c2;font-size:12px; }
+.mini-stat strong { font:800 23px Manrope,sans-serif; }
+.mini-stat>svg,.mini-stat-mark,.mini-stat-trend { position:absolute;right:18px;top:20px;color:var(--yellow); }
+.mini-stat-mark { display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(245,197,24,.13);font-weight:800; }
+.mini-stat-trend { color:#19df87;font-size:12px;font-weight:700; }
+.resource-table-panel { padding:0 0 5px; }
+.resource-table-heading { display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 18px;border-bottom:1px solid var(--line); }
+.resource-table-heading h2 { margin:0;font:700 15px Manrope,sans-serif; }
+.resource-table-heading>div { display:flex;gap:9px;align-items:center; }
+.resource-table-heading .search-filter { min-width:220px; }
+.table-product-icon,.customer-avatar { display:inline-grid;place-items:center;width:34px;height:34px;margin-right:10px;vertical-align:middle;border:1px solid rgba(245,197,24,.2);border-radius:9px;background:rgba(245,197,24,.07);color:var(--yellow); }
+.customer-avatar { border-radius:50%;font-size:10px;font-weight:700; }
+.row-actions { display:flex;gap:5px; }
+.row-actions button { display:grid;place-items:center;width:30px;height:30px;border:1px solid transparent;border-radius:8px;background:transparent;color:#b9c2ca; }
+.row-actions button:hover { border-color:rgba(245,197,24,.3);color:var(--yellow);background:rgba(245,197,24,.06); }
+.filter-select { min-width:130px;padding:10px 12px;border:1px solid var(--line);border-radius:11px;outline:0;background:#15191d;color:#e6e9ed;font-size:12px; }
+.modal-backdrop { position:fixed;z-index:80;inset:0;display:grid;place-items:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px); }
+.create-modal { width:min(480px,100%);padding:24px; }
+.modal-title { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px; }
+.modal-title h2 { margin:6px 0 0;font:800 23px Manrope,sans-serif; }
+.modal-close { width:30px;height:30px;border:1px solid var(--line);border-radius:8px;background:#1a1e21;color:white;font-size:22px;line-height:1; }
+.create-modal label { display:flex;flex-direction:column;gap:7px;margin-bottom:15px;color:#c5cbd1;font-size:12px; }
+.create-modal input,.create-modal select { width:100%;padding:11px 12px;border:1px solid rgba(255,255,255,.13);border-radius:9px;outline:0;background:rgba(0,0,0,.25);color:white;font-size:13px; }
+.create-modal input:focus,.create-modal select:focus { border-color:rgba(245,197,24,.6); }
+.create-modal select option { background:#171b1e; }
+.modal-fields { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.modal-actions { display:flex;justify-content:flex-end;gap:9px;margin-top:6px; }
+@media(max-width:760px) {
+ .resource-stats { grid-template-columns:1fr;gap:10px; }
+ .mini-stat { min-height:90px; }
+ .resource-table-heading { align-items:flex-start;flex-direction:column; }
+ .resource-table-heading,.resource-table-heading>div { width:100%; }
+ .resource-table-heading>div { flex-wrap:wrap; }
+ .resource-table-heading .search-filter { flex:1;min-width:0; }
+ .filter-select { flex:1; }
+}

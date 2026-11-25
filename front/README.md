@@ -1,16 +1,43 @@
-# React + Vite
+# Payload Express — Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface React + Vite para gestão de e-commerce. Esta pasta pode substituir o conteúdo atual de `front/`; o backend Java e `mock-api/` permanecem fora dela.
 
-Currently, two official plugins are available:
+## Stack
+- React + Vite
+- React Router DOM (SPA)
+- Lucide React
+- Recharts
+- CSS próprio com identidade preta e amarela e cards vitrificados
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Instalação
+No terminal, dentro desta pasta:
 
-## React Compiler
+```bash
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O Vite inicia normalmente em `http://localhost:5173`.
 
-## Expanding the ESLint configuration
+## JSON Server
+O front-end está preparado para usar `http://localhost:3001` quando conectarmos os serviços às coleções. O dashboard e as páginas usam dados demonstrativos nesta primeira versão.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Na pasta `mock-api`, execute o comando correspondente à versão instalada do JSON Server. Para JSON Server v0.x, por exemplo:
+
+```bash
+npx json-server --watch db.json --port 3001
+```
+
+Se a versão instalada for v1, confirme a sintaxe no `package.json` e na documentação dessa versão.
+
+## Rotas
+- `/` — Dashboard
+- `/produtos` — Produtos
+- `/clientes` — Clientes
+- `/pedidos` — Pedidos
+- `/pagamentos` — Pagamentos
+
+## Observações
+- O cadastro demonstrativo de produtos atualiza o estado em memória; a conexão com o `db.json` será feita na próxima etapa.
+- Botões de ações ainda exibem avisos de demonstração.
+- Os dados do dashboard são fictícios.

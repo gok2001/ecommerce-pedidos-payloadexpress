@@ -1,0 +1,7 @@
+@import './variables.css';
+@import './app.css';
+@import '../components/Sidebar/Sidebar.css';
+@import '../components/Header/Header.css';
+@import '../components/StatCard/StatCard.css';
+@import '../pages/Dashboard/Dashboard.css';
+@import '../pages/SharedPages.css';
