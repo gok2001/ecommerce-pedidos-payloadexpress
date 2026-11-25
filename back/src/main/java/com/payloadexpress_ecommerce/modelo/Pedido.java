@@ -1,6 +1,8 @@
 package com.payloadexpress_ecommerce.modelo;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,16 +33,24 @@ public class Pedido {
         }
 
         if (data == null || data.isBlank()) {
-            throw new IllegalArgumentException("Data é obrigatória.");
+            throw new IllegalArgumentException("Data do pedido é obrigatória.");
         }
 
         if (situacaoPedido != SituacaoPedido.PENDENTE) {
             throw new IllegalArgumentException("Novo pedido deve começar PENDENTE.");
         }
 
+        try {
+            this.data = LocalDate.parse(data.trim()).toString();
+        } catch (DateTimeParseException erro) {
+            throw new IllegalArgumentException(
+                "Data do pedido inválida. Use o formato AAAA-MM-DD, por exemplo 2026-11-25",
+                erro
+            );
+        }
+
         this.numero = numero.trim();
         this.cliente = cliente;
-        this.data = data.trim();
     }
 
     public String getNumero() {
