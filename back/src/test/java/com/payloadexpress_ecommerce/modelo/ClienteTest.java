@@ -1,6 +1,4 @@
-package modulo;
-
-import com.payloadexpress_ecommerce.modelo.Cliente;
+package com.payloadexpress_ecommerce.modelo;
 
 import org.junit.jupiter.api.Test;
 

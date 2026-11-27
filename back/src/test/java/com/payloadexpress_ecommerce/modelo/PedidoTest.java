@@ -1,15 +1,8 @@
-package modulo;
+package com.payloadexpress_ecommerce.modelo;
 
 import com.payloadexpress_ecommerce.excecao.EstoqueInsuficienteException;
 import com.payloadexpress_ecommerce.excecao.PagamentoRecusadoException;
 import com.payloadexpress_ecommerce.excecao.PedidoInvalidoException;
-import com.payloadexpress_ecommerce.modelo.CartaoCredito;
-import com.payloadexpress_ecommerce.modelo.Cliente;
-import com.payloadexpress_ecommerce.modelo.Pedido;
-import com.payloadexpress_ecommerce.modelo.Pix;
-import com.payloadexpress_ecommerce.modelo.Produto;
-import com.payloadexpress_ecommerce.modelo.SituacaoPedido;
-import com.payloadexpress_ecommerce.modelo.TipoChavePix;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
