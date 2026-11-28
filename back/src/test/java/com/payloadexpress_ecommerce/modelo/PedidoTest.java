@@ -7,7 +7,9 @@ import com.payloadexpress_ecommerce.excecao.PedidoInvalidoException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -41,7 +43,7 @@ public class PedidoTest {
     @DisplayName("Deve baixar o estoque quando há quantidade suficiente")
     void deveBaixarEstoqueQuandoHaQuantidadeSuficiente() throws Exception {
         notebook.baixarEstoque(2); // Act
-        assertEquals(3, notebook.getQuantidadeEmEstoque()); // Assert
+        assertEquals(3, notebook.getQuantidadeEmEstoque());
     }
 
     @Test
@@ -52,7 +54,7 @@ public class PedidoTest {
                 () -> notebook.baixarEstoque(50));
         assertEquals(50, erro.getQuantidadeSolicitada());
         assertTrue(erro.getMessage().contains("Notebook"));
-        assertEquals(5, notebook.getQuantidadeEmEstoque()); // não mexeu no estoque
+        assertEquals(5, notebook.getQuantidadeEmEstoque());
     }
 
     @Test 
@@ -94,6 +96,8 @@ public class PedidoTest {
     void deveRejeitarPagamentoQuandoCartaoNaoTemLimite() throws Exception {
         pedido.adicionarItem(notebook, 1);
 
+        int estoqueAposAdicionarItem = notebook.getQuantidadeEmEstoque();
+
         CartaoCredito cartaoSemLimite = new CartaoCredito(
             pedido.calcularValorTotal(),
             LocalDate.now(),
@@ -108,8 +112,22 @@ public class PedidoTest {
             () -> pedido.pagar(cartaoSemLimite)
         );
 
-        assertTrue(erro.getMessage().contains("não aprovado"));
-        assertEquals(SituacaoPedido.PENDENTE, pedido.getSituacaoPedido());
+        assertAll(
+            () -> assertTrue(erro.getMessage().contains("não aprovado")),
+            () -> assertEquals(
+                SituacaoPedido.PENDENTE,
+                pedido.getSituacaoPedido()
+            ),
+            () -> assertEquals(
+                SituacaoPagamento.ABERTO,
+                pedido.getSituacaoPagamento()
+            ),
+            () -> assertNull(pedido.getComprovante()),
+            () -> assertEquals(
+                estoqueAposAdicionarItem,
+                notebook.getQuantidadeEmEstoque()
+            )
+        );
     }
 
     @Test 
@@ -132,5 +150,55 @@ public class PedidoTest {
 
         assertTrue(erro.getMessage().contains("não pagos"));
         assertEquals(SituacaoPedido.PROCESSANDO, pedido.getSituacaoPedido());
+    }
+
+    @Test
+    @DisplayName("Deve adicionar item ao pedido e reservar o estoque")
+    void deveAdicionarItemEReduzirEstoque() throws Exception {
+        pedido.adicionarItem(notebook, 2);
+
+        assertAll(
+            () -> assertEquals(3, notebook.getQuantidadeEmEstoque()),
+            () -> assertEquals(1, pedido.getListaDeItens().size()),
+            () -> assertEquals(2, pedido.getListaDeItens().get(0).getQuantidade()),
+            () -> assertEquals(SituacaoPedido.PENDENTE, pedido.getSituacaoPedido())
+        );
+    }
+
+    @Test
+    @DisplayName("Deve concluir pagamento Pix e atualizar a situação do pedido")
+    void deveConcluirPagamentoComPix() throws Exception {
+        pedido.adicionarItem(notebook, 1);
+        int estoqueAposAdicionarItem = notebook.getQuantidadeEmEstoque();
+
+        Pix pix = new Pix(
+            pedido.calcularValorTotal(),
+            LocalDate.now(),
+            "ana@email.com",
+            TipoChavePix.EMAIL
+        );
+
+        assertTrue(pedido.pagar(pix));
+
+        assertAll(
+            () -> assertEquals(SituacaoPagamento.PAGO, pedido.getSituacaoPagamento()),
+            () -> assertEquals(SituacaoPedido.PROCESSANDO, pedido.getSituacaoPedido()),
+            () -> assertEquals(pix, pedido.getFormaPagamento()),
+            () -> assertEquals(pix.getComprovante(), pedido.getComprovante()),
+            () -> assertEquals(estoqueAposAdicionarItem, notebook.getQuantidadeEmEstoque())
+        );
+    }
+
+    @Test
+    @DisplayName("Deve devolver ao estoque os itens de um pedido cancelado")
+    void deveReporEstoqueAoCancelarPedido() throws Exception {
+        pedido.adicionarItem(notebook, 2);
+
+        pedido.cancelar();
+
+        assertAll(
+            () -> assertEquals(5, notebook.getQuantidadeEmEstoque()),
+            () -> assertEquals(SituacaoPedido.CANCELADO, pedido.getSituacaoPedido())
+        );
     }
 }
