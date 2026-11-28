@@ -9,25 +9,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DinheiroTest {
 
+    private Dinheiro dinheiro;
+
+    @BeforeEach
+    void prepararCenario() {
+        dinheiro = new Dinheiro(new BigDecimal("100.00"));
+    }
+
     @Test
     @DisplayName("Deve criar pagamento em dinheiro com valor positivo")
     void deveCriarPagamentoEmDinheiro() {
-        Dinheiro dinheiro = new Dinheiro(new BigDecimal("100.00"));
-
-        assertEquals("Dinheiro", dinheiro.getDescricao());
-        assertEquals(0, BigDecimal.ZERO.compareTo(dinheiro.getTroco()));
+        assertAll(
+            () -> assertEquals("Dinheiro", dinheiro.getDescricao()),
+            () -> assertEquals(0, BigDecimal.ZERO.compareTo(dinheiro.getTroco()))
+        );
     }
 
     @Test
     @DisplayName("Deve aceitar pagamento com valor exato e sem troco")
     void deveAceitarValorExato() {
-        Dinheiro dinheiro = new Dinheiro(new BigDecimal("100.00"));
-
         assertTrue(dinheiro.processar(new BigDecimal("100.00")));
 
         assertAll(
@@ -39,26 +45,26 @@ class DinheiroTest {
     @Test
     @DisplayName("Deve aceitar pagamento e calcular o troco")
     void deveCalcularTroco() {
-        Dinheiro dinheiro = new Dinheiro(new BigDecimal("150.00"));
+        Dinheiro pagamentoComTroco = new Dinheiro(new BigDecimal("150.00"));
 
-        assertTrue(dinheiro.processar(new BigDecimal("100.00")));
+        assertTrue(pagamentoComTroco.processar(new BigDecimal("100.00")));
 
         assertEquals(
             0,
-            new BigDecimal("50.00").compareTo(dinheiro.getTroco())
+            new BigDecimal("50.00").compareTo(pagamentoComTroco.getTroco())
         );
     }
 
     @Test
     @DisplayName("Deve recusar pagamento quando o valor recebido é insuficiente")
     void deveRecusarValorInsuficiente() {
-        Dinheiro dinheiro = new Dinheiro(new BigDecimal("90.00"));
+        Dinheiro pagamentoInsuficiente = new Dinheiro(new BigDecimal("90.00"));
 
-        assertFalse(dinheiro.processar(new BigDecimal("100.00")));
+        assertFalse(pagamentoInsuficiente.processar(new BigDecimal("100.00")));
 
         assertAll(
-            () -> assertEquals(0, BigDecimal.ZERO.compareTo(dinheiro.getTroco())),
-            () -> assertNull(dinheiro.getComprovante())
+            () -> assertEquals(0, BigDecimal.ZERO.compareTo(pagamentoInsuficiente.getTroco())),
+            () -> assertNull(pagamentoInsuficiente.getComprovante())
         );
     }
 
@@ -74,8 +80,6 @@ class DinheiroTest {
     @Test
     @DisplayName("Deve rejeitar valor cobrado igual a zero")
     void deveRejeitarValorCobradoZerado() {
-        Dinheiro dinheiro = new Dinheiro(new BigDecimal("100.00"));
-
         assertThrows(
             IllegalArgumentException.class,
             () -> dinheiro.processar(BigDecimal.ZERO)
@@ -85,7 +89,6 @@ class DinheiroTest {
     @Test
     @DisplayName("Não deve processar novamente um pagamento já concluído")
     void deveRejeitarSegundoProcessamento() {
-        Dinheiro dinheiro = new Dinheiro(new BigDecimal("100.00"));
         dinheiro.processar(new BigDecimal("100.00"));
 
         assertThrows(
